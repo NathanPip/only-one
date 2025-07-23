@@ -1,3 +1,5 @@
 [gd_scene format=3 uid="uid://dbv0sfajek4yy"]
 
 [node name="Game" type="Node2D"]
+
+[node name="Spawner" type="Node2D" parent="."]
