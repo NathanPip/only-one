@@ -56,10 +56,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for i in range(fired_projectiles.size()):
 		var proj = fired_projectiles[i]
+		if proj == null:
+			continue
 		proj.position += proj.direction*proj.speed * delta
 		if collision_check(proj):
 			removables.append(i)
 			kill_projectile(proj)
+			ready_projectiles.append(proj)
 		if proj.position.x > 2000 || proj.position.x < -300 || proj.position.y > 2000 || proj.position.y < -300:
 			ready_projectiles.append(proj)
 			removables.append(i)

@@ -8,3 +8,4 @@ texture_filter = 1
 texture = ExtResource("1_3ijri")
 script = ExtResource("2_7kis1")
 speed = 100
+size = 32.0
