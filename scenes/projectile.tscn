@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx3r6howwyucd"]
+
+[ext_resource type="Texture2D" uid="uid://cwrb7d4i5mynp" path="res://sprites/spike.png" id="1_3ijri"]
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="2_7kis1"]
+
+[node name="Projectile" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_3ijri")
+script = ExtResource("2_7kis1")
+speed = 100

@@ -1,5 +1,74 @@
-[gd_scene format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=9 format=3 uid="uid://dbv0sfajek4yy"]
+
+[ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_yepdu"]
+[ext_resource type="Texture2D" uid="uid://do6therr0ir7b" path="res://sprites/icon.svg" id="2_6nrea"]
+[ext_resource type="Texture2D" uid="uid://cyxrq6elvvesr" path="res://sprites/game_area.png" id="2_iylc6"]
+[ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
+[ext_resource type="PackedScene" uid="uid://cx3r6howwyucd" path="res://scenes/projectile.tscn" id="6_h8s87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
+size = Vector2(19, 576)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5unj"]
+size = Vector2(665, 16)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_yepdu")
 
-[node name="Spawner" type="Node2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.183242, 0.166597, 0.146242, 1)
+position = Vector2(639, 360.5)
+scale = Vector2(9.96875, 5.60156)
+texture = ExtResource("2_6nrea")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0.263342, 0.413004, 0.586811, 1)
+texture_filter = 1
+position = Vector2(617, 370)
+scale = Vector2(3, 3)
+texture = ExtResource("2_iylc6")
+
+[node name="boundaries" type="StaticBody2D" parent="Sprite2D2"]
+position = Vector2(-180.667, -108.333)
+scale = Vector2(0.333333, 0.333333)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+position = Vector2(202, 325)
+shape = SubResource("RectangleShape2D_4v5xx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+position = Vector2(882, 324)
+shape = SubResource("RectangleShape2D_4v5xx")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+position = Vector2(544, 35)
+shape = SubResource("RectangleShape2D_q5unj")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+position = Vector2(544, 615)
+shape = SubResource("RectangleShape2D_q5unj")
+
+[node name="Player" parent="." instance=ExtResource("1_4jkwy")]
+position = Vector2(533, 313)
+speed = 700.0
+
+[node name="Spawner_Group4" parent="." instance=ExtResource("4_s716r")]
+position = Vector2(-8, 367)
+
+[node name="Spawner_Group6" parent="." instance=ExtResource("4_s716r")]
+position = Vector2(601, -7)
+rotation = 1.5708
+
+[node name="Spawner_Group7" parent="." instance=ExtResource("4_s716r")]
+position = Vector2(594, 740)
+rotation = -1.5708
+
+[node name="Spawner_Group5" parent="." instance=ExtResource("4_s716r")]
+position = Vector2(1288, 367)
+rotation = 3.14159
+
+[node name="Projectile" parent="." instance=ExtResource("6_h8s87")]
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
