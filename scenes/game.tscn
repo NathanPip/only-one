@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
 [ext_resource type="Texture2D" uid="uid://do6therr0ir7b" path="res://sprites/icon.svg" id="2_6nrea"]
 [ext_resource type="Texture2D" uid="uid://cyxrq6elvvesr" path="res://sprites/game_area.png" id="2_iylc6"]
-[ext_resource type="AudioStream" uid="uid://bhw3f2523rye5" path="res://sounds/menu_song.mp3" id="2_u5sy4"]
+[ext_resource type="AudioStream" uid="uid://bfcpdxmduv1c7" path="res://sounds/sad_one.mp3" id="2_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
 [ext_resource type="PackedScene" uid="uid://cx3r6howwyucd" path="res://scenes/projectile.tscn" id="6_h8s87"]
 
