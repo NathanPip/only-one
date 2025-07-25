@@ -6,7 +6,7 @@ const projectile_scene = preload("res://scenes/projectile.tscn")
 @export var projectile_count: int = 20
 var spawners: Array[Spawner] = []
 var ready_projectiles: Array[Projectile] = []
-var fired_projectiles: Array[Projectile] = []
+var projectiles: Array[Projectile] = []
 var removables: Array[int] = []
 var player: Player 
 
@@ -19,20 +19,24 @@ func fire_projectile():
 	var rand = randi_range(0, spawners.size()-1)
 	var spawner = spawners[rand]
 	var proj = ready_projectiles.pop_front()
-	spawn_projectile(proj)
+	proj.speed = randf_range(100, 150)
 	if proj == null:
 		print("no projectile")
 		return
 	var dir = spawner.shoot_direction.rotated(spawner.global_rotation)	
 	proj.direction = dir
 	proj.global_position = spawner.global_position
-	fired_projectiles.append(proj)
+	spawn_projectile(proj)
+
 
 func kill_projectile(proj: Projectile):
+	ready_projectiles.append(proj)
+	proj.fired = false
 	proj.visible = false
 	pass
 
 func spawn_projectile(proj: Projectile):
+	proj.fired = true
 	proj.visible = true
 
 # Called when the node enters the scene tree for the first time.
@@ -51,23 +55,16 @@ func _ready() -> void:
 		game_node.add_child.call_deferred(proj)
 		proj.global_position = starting_spawn 
 		ready_projectiles.append(proj)	
+		projectiles.append(proj)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	for i in range(fired_projectiles.size()):
-		var proj = fired_projectiles[i]
-		if proj == null:
+	for i in range(projectiles.size()):
+		var proj = projectiles[i]
+		if proj == null || !proj.fired:
 			continue
 		proj.position += proj.direction*proj.speed * delta
 		if collision_check(proj):
-			removables.append(i)
 			kill_projectile(proj)
-			ready_projectiles.append(proj)
 		if proj.position.x > 2000 || proj.position.x < -300 || proj.position.y > 2000 || proj.position.y < -300:
-			ready_projectiles.append(proj)
-			removables.append(i)
-	if removables.size() > 0:
-		for i in removables:
-			fired_projectiles.remove_at(i)
-	removables.clear()
-	pass
+			kill_projectile(proj)
