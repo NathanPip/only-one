@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=14 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -8,6 +8,9 @@
 [ext_resource type="Script" uid="uid://dqsoql4t4daj8" path="res://resources/power_up_resource.gd" id="2_vtaks"]
 [ext_resource type="Resource" uid="uid://bimi2fbtuicjy" path="res://resources/invulnerable_res.tres" id="3_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
+[ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="9_kvpfn"]
+[ext_resource type="Script" uid="uid://ciots22qctyu4" path="res://scripts/ex.gd" id="10_dinhu"]
+[ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
 size = Vector2(19, 576)
@@ -83,3 +86,15 @@ autostart = true
 [node name="Powerup_Timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="Ex" type="Sprite2D" parent="." node_paths=PackedStringArray("border")]
+modulate = Color(0.672242, 0.00597603, 0.260212, 1)
+position = Vector2(241, 213)
+scale = Vector2(2, 2)
+texture = ExtResource("9_kvpfn")
+script = ExtResource("10_dinhu")
+border = NodePath("../Ex_border")
+
+[node name="Ex_border" parent="." instance=ExtResource("11_kvuet")]
+position = Vector2(240, 52)
+size = Vector2(750, 640)

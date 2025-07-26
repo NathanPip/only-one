@@ -21,7 +21,6 @@ var starting_spawn = Vector2(-100, -100)
 @export var powerup_count: int = 3
 
 @export var projectile_speed_range: Vector2 = Vector2(100, 200)
-@export var power_up_speed_range: Vector2 = Vector2(100, 200)
 
 func collision_check(proj: Projectile) -> bool:
 	if proj.position.x-proj.size/2 < player.position.x + 24 && proj.position.x + proj.size/2 > player.position.x - 24 && proj.position.y - proj.size/2 < player.position.y + 24 && proj.position.y + proj.size/2 > player.position.y - 24:
@@ -60,11 +59,10 @@ func _on_powerup_timeout():
 	var keys = ready_powerup_projectiles_map.keys()
 	var rand_power_up = randi_range(0, keys.size()-1)
 	var ready_powerups = ready_powerup_projectiles_map[keys[rand_power_up]]
-	print(ready_powerups)
+	var speed_range = ready_powerups.speed_range
 	var pup = ready_powerups.ready_projectiles.pop_front()
-	print(pup)
 	if pup != null:
-		spawner.prepare_projectile(pup, power_up_speed_range)
+		spawner.prepare_projectile(pup, speed_range)
 		spawn_projectile(pup)
 	var rand = randf_range(powerup_wait_range.x, powerup_wait_range.y)
 	powerup_timer.wait_time = rand
