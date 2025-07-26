@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=15 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -8,9 +8,13 @@
 [ext_resource type="Script" uid="uid://dqsoql4t4daj8" path="res://resources/power_up_resource.gd" id="2_vtaks"]
 [ext_resource type="Resource" uid="uid://bimi2fbtuicjy" path="res://resources/invulnerable_res.tres" id="3_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
-[ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="9_kvpfn"]
-[ext_resource type="Script" uid="uid://ciots22qctyu4" path="res://scripts/ex.gd" id="10_dinhu"]
+[ext_resource type="Shader" uid="uid://c12oegfjt1476" path="res://shaders/bg.gdshader" id="5_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvuet"]
+shader = ExtResource("5_kvpfn")
+shader_parameter/pixelate_amt = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
 size = Vector2(19, 576)
@@ -18,83 +22,82 @@ size = Vector2(19, 576)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5unj"]
 size = Vector2(665, 16)
 
-[node name="Game" type="Node2D"]
+[node name="Node2D" type="Node2D"]
+
+[node name="Game" type="Node2D" parent="."]
 script = ExtResource("1_yepdu")
 power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource("2_u5sy4")
 volume_db = -5.0
 autoplay = true
 parameters/looping = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
+material = SubResource("ShaderMaterial_kvuet")
 position = Vector2(639, 360.5)
 scale = Vector2(9.96875, 5.60156)
 texture = ExtResource("2_6nrea")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Sprite2D2" type="Sprite2D" parent="Game"]
 modulate = Color(0.263342, 0.413004, 0.586811, 1)
 texture_filter = 1
 position = Vector2(617, 370)
 scale = Vector2(3, 3)
 texture = ExtResource("2_iylc6")
 
-[node name="boundaries" type="StaticBody2D" parent="Sprite2D2"]
+[node name="boundaries" type="StaticBody2D" parent="Game/Sprite2D2"]
 position = Vector2(-180.667, -108.333)
 scale = Vector2(0.333333, 0.333333)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
 position = Vector2(202, 325)
 shape = SubResource("RectangleShape2D_4v5xx")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
 position = Vector2(882, 324)
 shape = SubResource("RectangleShape2D_4v5xx")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
 position = Vector2(544, 35)
 shape = SubResource("RectangleShape2D_q5unj")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Sprite2D2/boundaries"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
 position = Vector2(544, 615)
 shape = SubResource("RectangleShape2D_q5unj")
 
-[node name="Player" parent="." instance=ExtResource("1_4jkwy")]
+[node name="Player" parent="Game" instance=ExtResource("1_4jkwy")]
 position = Vector2(533, 313)
 speed = 700.0
 
-[node name="Spawner_Group4" parent="." instance=ExtResource("4_s716r")]
+[node name="Spawner_Group4" parent="Game" instance=ExtResource("4_s716r")]
 position = Vector2(-8, 392)
 
-[node name="Spawner_Group6" parent="." instance=ExtResource("4_s716r")]
+[node name="Spawner_Group6" parent="Game" instance=ExtResource("4_s716r")]
 position = Vector2(586, -7)
 rotation = 1.5708
 
-[node name="Spawner_Group7" parent="." instance=ExtResource("4_s716r")]
+[node name="Spawner_Group7" parent="Game" instance=ExtResource("4_s716r")]
 position = Vector2(630, 740)
 rotation = -1.5708
 
-[node name="Spawner_Group5" parent="." instance=ExtResource("4_s716r")]
+[node name="Spawner_Group5" parent="Game" instance=ExtResource("4_s716r")]
 position = Vector2(1281, 339)
 rotation = 3.14159
 
-[node name="Projectile_Timer" type="Timer" parent="."]
+[node name="Projectile_Timer" type="Timer" parent="Game"]
 autostart = true
 
-[node name="Powerup_Timer" type="Timer" parent="."]
+[node name="Powerup_Timer" type="Timer" parent="Game"]
 wait_time = 2.0
 autostart = true
 
-[node name="Ex" type="Sprite2D" parent="." node_paths=PackedStringArray("border")]
-modulate = Color(0.672242, 0.00597603, 0.260212, 1)
+[node name="Ex" parent="Game" node_paths=PackedStringArray("border") instance=ExtResource("10_dinhu")]
 position = Vector2(241, 213)
-scale = Vector2(2, 2)
-texture = ExtResource("9_kvpfn")
-script = ExtResource("10_dinhu")
 border = NodePath("../Ex_border")
 
-[node name="Ex_border" parent="." instance=ExtResource("11_kvuet")]
+[node name="Ex_border" parent="Game" instance=ExtResource("11_kvuet")]
 position = Vector2(240, 52)
 size = Vector2(750, 640)
