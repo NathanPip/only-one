@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://u8nq6ll45pg6"]
+
+[ext_resource type="Script" uid="uid://vkdtxb4a3wbo" path="res://scripts/invulnerable_power_up.gd" id="1_aiw5p"]
+
+[node name="Invulnerable_PowerUp" type="Node"]
+script = ExtResource("1_aiw5p")
+duration = 3.0

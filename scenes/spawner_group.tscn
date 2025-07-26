@@ -20,6 +20,3 @@ position = Vector2(-25.001, 56)
 
 [node name="Spawner4" parent="." instance=ExtResource("1_8rrhh")]
 position = Vector2(-25.001, 168)
-
-[node name="Spawner6" parent="." instance=ExtResource("1_8rrhh")]
-position = Vector2(-25.001, 280)

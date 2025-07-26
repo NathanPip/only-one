@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh1l66v6lfj5u"]
+
+[ext_resource type="Script" uid="uid://ce83h4mgcvbc3" path="res://scripts/power_up_projectile.gd" id="1_hkqpe"]
+[ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="1_u7vmt"]
+
+[node name="PowerUpProjectile" type="Sprite2D"]
+modulate = Color(1, 0.168627, 1, 1)
+texture_filter = 1
+texture = ExtResource("1_u7vmt")
+script = ExtResource("1_hkqpe")
+metadata/_custom_type_script = "uid://ce83h4mgcvbc3"

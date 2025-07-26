@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerUpRes" load_steps=4 format=3 uid="uid://bimi2fbtuicjy"]
+
+[ext_resource type="PackedScene" uid="uid://u8nq6ll45pg6" path="res://scenes/invulnerable_power_up.tscn" id="1_5hct3"]
+[ext_resource type="Script" uid="uid://dqsoql4t4daj8" path="res://resources/power_up_resource.gd" id="1_wkac8"]
+[ext_resource type="PackedScene" uid="uid://bh1l66v6lfj5u" path="res://scenes/invulnerable_power_up_projectile.tscn" id="2_1ya0f"]
+
+[resource]
+script = ExtResource("1_wkac8")
+projectile = ExtResource("2_1ya0f")
+powerup = ExtResource("1_5hct3")
+metadata/_custom_type_script = "uid://dqsoql4t4daj8"
