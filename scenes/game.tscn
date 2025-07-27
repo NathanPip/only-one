@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=24 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -12,15 +12,48 @@
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dinhu"]
+noise = SubResource("FastNoiseLite_kvpfn")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvuet"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trtic"]
+noise = SubResource("FastNoiseLite_kvuet")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvuet"]
 shader = ExtResource("5_kvpfn")
-shader_parameter/pixelate_amt = 0.0
+shader_parameter/noise = SubResource("NoiseTexture2D_dinhu")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_trtic")
+shader_parameter/speed = 0.09
+shader_parameter/lightness = 0.115
+shader_parameter/pixelate_amt = 53.16
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
 size = Vector2(19, 576)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5unj"]
 size = Vector2(665, 16)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ir15t"]
+frequency = 0.0126
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ca42v"]
+noise = SubResource("FastNoiseLite_ir15t")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rysoc"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ssvqc"]
+noise = SubResource("FastNoiseLite_rysoc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_264po"]
+shader = ExtResource("5_kvpfn")
+shader_parameter/noise = SubResource("NoiseTexture2D_ca42v")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_ssvqc")
+shader_parameter/speed = 0.0
+shader_parameter/lightness = 0.2
+shader_parameter/pixelate_amt = 26.8
 
 [node name="Node2D" type="Node2D"]
 
@@ -42,7 +75,6 @@ scale = Vector2(9.96875, 5.60156)
 texture = ExtResource("2_6nrea")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Game"]
-modulate = Color(0.263342, 0.413004, 0.586811, 1)
 texture_filter = 1
 position = Vector2(617, 370)
 scale = Vector2(3, 3)
@@ -101,3 +133,15 @@ border = NodePath("../Ex_border")
 [node name="Ex_border" parent="Game" instance=ExtResource("11_kvuet")]
 position = Vector2(240, 52)
 size = Vector2(750, 640)
+
+[node name="GameOver" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+material = SubResource("ShaderMaterial_264po")
+layout_mode = 0
+offset_right = 68.0
+offset_bottom = 62.0
