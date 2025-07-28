@@ -73,6 +73,7 @@ func travel(delta: float):
 
 func reset():
 	self.position = pick_point()
+	current_state = ExState.TRAVELING
 	pass
 
 func _ready() -> void:
