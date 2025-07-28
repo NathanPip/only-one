@@ -18,16 +18,7 @@ var power_up_timer: float = 0:
 		return power_up_timer 
 var power_up_active: bool = false
 
-@export var invulnerable: bool:
-	set(value):
-		invulnerable = value
-		var color = self.modulate
-		if value:
-			self.modulate = Color(color.a, color.g, color.b, .5)
-		else:
-			self.modulate = Color(color.a, color.g, color.b, 1)
-	get:
-		return invulnerable
+@export var invulnerable = false
 
 func set_power_up(power_up: PowerUp):
 	current_power_up = power_up

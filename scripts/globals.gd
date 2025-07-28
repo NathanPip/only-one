@@ -2,6 +2,7 @@ extends Node
 
 signal reset_game
 
+enum power_up_type {INVULNERABLE}
 enum GameStateEnum {GAMEOVER, MENU, PAUSE, PLAYING}
 
 @export var starting_game_state: GameStateEnum = GameStateEnum.PLAYING
@@ -45,7 +46,8 @@ func restart():
 func _ready() -> void:
 	game_node = get_tree().get_root().get_node("Node2D").get_node("Game")
 	game_over_node = get_tree().get_root().get_node("Node2D").get_node("GameOver")
-	set_node_states()
+	game_node.on_ready.connect(set_node_states)
+	game_over_node.on_ready.connect(set_node_states)
 	health = starting_health
 	game_state = starting_game_state
 	reset_game.connect(restart)

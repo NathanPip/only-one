@@ -1,12 +1,16 @@
 class_name Game
 extends Node2D
 
+
+signal on_ready
+
 const projectile_scene = preload("res://scenes/projectile.tscn")
 const invulnerable_powerup_scene = preload("res://scenes/invulnerable_power_up.tscn")
 
 var spawner_groups: Array[SpawnerGroup] = []
 var ready_projectiles: Array[Projectile] = []
-var ready_powerup_projectiles_map: Dictionary = {}
+var fired_projectiles: Array[Projectile] = []
+var powerups_map: Dictionary = {}
 
 var projectiles: Array[Projectile] = []
 var player: Player 
@@ -27,16 +31,18 @@ func collision_check(proj: Projectile) -> bool:
 		return true
 	return false
 
-func kill_projectile(proj: Projectile):
+func kill_projectile(proj: Projectile, index: int):
 	if proj is PowerUpProjectile:
-		ready_powerup_projectiles_map[proj.power_up.power_up_type].ready_projectiles.append(proj)
+		powerups_map[proj.power_up.type].ready_projectiles.append(proj)
 	else:
 		ready_projectiles.append(proj)
+	fired_projectiles.remove_at(index)
 	proj.fired = false
 	proj.visible = false
 	pass
 
 func spawn_projectile(proj: Projectile):
+	fired_projectiles.append(proj)
 	proj.fired = true
 	proj.visible = true
 
@@ -56,9 +62,9 @@ func _on_proj_timeout():
 
 func _on_powerup_timeout():
 	var spawner = choose_spawner()
-	var keys = ready_powerup_projectiles_map.keys()
+	var keys = powerups_map.keys()
 	var rand_power_up = randi_range(0, keys.size()-1)
-	var ready_powerups = ready_powerup_projectiles_map[keys[rand_power_up]]
+	var ready_powerups = powerups_map[keys[rand_power_up]]
 	var speed_range = ready_powerups.speed_range
 	var pup = ready_powerups.ready_projectiles.pop_front()
 	if pup != null:
@@ -78,7 +84,8 @@ func instantiate_projectiles(count: int, list: Array[Projectile], proj_scene: Pa
 func setup_powerups(powerups: Array[PowerUpRes]):
 	for p in powerups:
 		var inst = p.powerup.instantiate()
-		if ready_powerup_projectiles_map.has(inst.power_up_type):
+		inst.type = p.type
+		if powerups_map.has(p.type):
 			print("double powerups exists")
 			get_tree().quit()
 			return
@@ -89,7 +96,7 @@ func setup_powerups(powerups: Array[PowerUpRes]):
 			self.add_child(p_inst)
 			p.ready_projectiles.append(p_inst)
 			projectiles.append(p_inst)
-		ready_powerup_projectiles_map[inst.power_up_type] = p
+		powerups_map[p.type] = p
 
 func reset():
 	for proj in projectiles:
@@ -97,6 +104,7 @@ func reset():
 		proj.fired = false
 	proj_timer.wait_time = 1
 	powerup_timer.wait_time = randf_range(powerup_wait_range.x, powerup_wait_range.y)
+	on_ready.emit()
 	pass
 
 # Called when the node enters the scene tree for the first time.
@@ -121,13 +129,17 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	for i in range(projectiles.size()):
-		var proj = projectiles[i]
+	var size = fired_projectiles.size()
+	for i in range(size-1, -1, -1):
+		var proj = fired_projectiles[i]
 		if proj == null || !proj.fired:
+			fired_projectiles.remove_at(i)
 			continue
 		proj._move(delta)
 		if collision_check(proj) && !player.invulnerable:
 			proj._on_impact(player)
-			kill_projectile(proj)
+			kill_projectile(proj, i)
+			continue
 		if proj.position.x > 2000 || proj.position.x < -300 || proj.position.y > 2000 || proj.position.y < -300:
-			kill_projectile(proj)
+			kill_projectile(proj, i)
+			continue

@@ -6,6 +6,7 @@ extends Node2D
 var attack_point: Vector2 = Vector2(0,0)
 var attacking: bool = false
 var traveling: bool = true 
+var game_node: Game
 
 func pick_point() -> Vector2:
 	var side = randi_range(0,3)
@@ -40,6 +41,7 @@ func _ready() -> void:
 		print("no ex border assigned")
 		get_tree().quit()
 	
+	game_node = get_tree().get_root().get_node("Node2D").get_node("Game")
 	attack_point = pick_point()
 	Globals.reset_game.connect(reset)
 	pass
