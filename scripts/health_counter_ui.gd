@@ -1,13 +1,11 @@
 extends Control
 
 var container: HBoxContainer
-var sprites: Array[Sprite2D]
+var sprites: Array[TextureRect] = []
 
 func change_hearts(health: int):
-	print(health)
 	for i in range(sprites.size()):
 		var s = sprites[i]
-		print(i <= health-1)
 		if i <= health-1:
 			s.material.set_shader_parameter("dead_amt", 0)
 		else:
@@ -16,6 +14,11 @@ func change_hearts(health: int):
 func _ready() -> void:
 	Globals.health_changed.connect(change_hearts)
 	container = get_node("HBoxContainer")
-	for c in container.get_children():
-		sprites.append(c)
+	var heart = container.get_node("TextureRect")
+	sprites.append(heart)
+	for h in range(Globals.health-1):
+		var nh = heart.duplicate()
+		nh.material = heart.material.duplicate()
+		container.add_child(nh)
+		sprites.append(nh)
 	pass

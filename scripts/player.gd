@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 @export var speed = 300.0
 @export var starting_position: Vector2 = Vector2(601, 351)
+@export var damage_inv_time: float = 1
+var timer: Timer
 var current_power_up: PowerUp
 var power_up_timer: float = 0:
 	set(val):
@@ -19,6 +21,16 @@ var power_up_timer: float = 0:
 var power_up_active: bool = false
 
 @export var invulnerable = false
+
+
+func inv_timeout():
+	invulnerable = false
+	timer.wait_time = damage_inv_time
+
+func take_damage():
+	invulnerable = true
+	timer.start()
+	pass
 
 func set_power_up(power_up: PowerUp):
 	current_power_up = power_up
@@ -49,7 +61,11 @@ func _physics_process(_delta: float) -> void:
 
 func _ready() -> void:
 	position = starting_position
+	timer = get_node("Damage_Timer")
+	timer.wait_time = damage_inv_time
+	timer.timeout.connect(inv_timeout)
 	Globals.reset_game.connect(reset)
+	Globals.damage_taken.connect(take_damage)
 
 func _process(delta: float) -> void:
 	if power_up_active:

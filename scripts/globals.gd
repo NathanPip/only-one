@@ -2,6 +2,7 @@ extends Node
 
 signal reset_game
 signal health_changed(amt: int)
+signal damage_taken
 
 enum power_up_type {INVULNERABLE}
 enum projectile_type {BASIC_PROJECTILE, EX_PROJECTILE, INVULNERABLE_PROJECTILE}
@@ -25,6 +26,7 @@ var health: int = 3:
 
 func take_damage(amount: int):
 	health -= amount 
+	damage_taken.emit()
 	if health <= 0:
 		game_state = GameStateEnum.GAMEOVER
 

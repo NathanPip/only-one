@@ -85,6 +85,9 @@ func setup_projectiles(projectiles: Array[ProjectileResource]):
 			return
 		for i in range(proj.instantiation_count):
 			var inst = proj.projectile_scene.instantiate() as Projectile
+			if proj.additional_sprites.size() > 0:
+				var tex = proj.additional_sprites[i % proj.additional_sprites.size()]
+				inst.texture = tex
 			inst.type = proj.type
 			self.add_child(inst)
 			inst.global_position = starting_spawn 

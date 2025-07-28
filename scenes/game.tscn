@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=27 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://b3ksaqieodvb4" path="res://scripts/game_over_scene.gd" id="12_dinhu"]
 [ext_resource type="Script" uid="uid://dikrc0p8v0nhg" path="res://scripts/health_counter_ui.gd" id="16_264po"]
-[ext_resource type="Shader" uid="uid://bsvqa1bum5mby" path="res://shaders/heart_ui.gdshader" id="16_ssvqc"]
+[ext_resource type="Material" uid="uid://dd4ur6y4mff73" path="res://materials/heart_ui_mat.tres" id="17_1kice"]
 [ext_resource type="Texture2D" uid="uid://d207m54lqqt0b" path="res://sprites/health_counter_sprite.png" id="17_264po"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
@@ -43,27 +43,6 @@ size = Vector2(7.5, 576)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5unj"]
 size = Vector2(580.001, 4.99957)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kice"]
-shader = ExtResource("16_ssvqc")
-shader_parameter/border_color = Color(1, 1, 1, 1)
-shader_parameter/inner_color = Color(0.754223, 0.163247, 0.245755, 1)
-shader_parameter/inner_color_dead = Color(0, 0, 0, 1)
-shader_parameter/dead_amt = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_264po"]
-shader = ExtResource("16_ssvqc")
-shader_parameter/border_color = Color(1, 1, 1, 1)
-shader_parameter/inner_color = Color(0.754223, 0.163247, 0.245755, 1)
-shader_parameter/inner_color_dead = Color(0, 0, 0, 1)
-shader_parameter/dead_amt = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5newe"]
-shader = ExtResource("16_ssvqc")
-shader_parameter/border_color = Color(1, 1, 1, 1)
-shader_parameter/inner_color = Color(0.754223, 0.163247, 0.245755, 1)
-shader_parameter/inner_color_dead = Color(0, 0, 0, 1)
-shader_parameter/dead_amt = 0.0
 
 [node name="Node2D" type="Node2D"]
 
@@ -162,28 +141,15 @@ offset_right = -43.0
 offset_bottom = 40.0
 alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="Game/Health_Counter/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Game/Health_Counter/HBoxContainer"]
 texture_filter = 1
-material = SubResource("ShaderMaterial_1kice")
-position = Vector2(21, 24)
-scale = Vector2(2, 2)
+material = ExtResource("17_1kice")
+layout_mode = 2
 texture = ExtResource("17_264po")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Game/Health_Counter/HBoxContainer"]
-texture_filter = 1
-material = SubResource("ShaderMaterial_264po")
-position = Vector2(53, 24)
-scale = Vector2(2, 2)
-texture = ExtResource("17_264po")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Game/Health_Counter/HBoxContainer"]
-texture_filter = 1
-material = SubResource("ShaderMaterial_5newe")
-position = Vector2(85, 24)
-scale = Vector2(2, 2)
-texture = ExtResource("17_264po")
+stretch_mode = 3
 
 [node name="GameOver" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 721.0

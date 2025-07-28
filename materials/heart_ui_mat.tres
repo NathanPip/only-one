@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dd4ur6y4mff73"]
+
+[ext_resource type="Shader" uid="uid://bsvqa1bum5mby" path="res://shaders/heart_ui.gdshader" id="1_jdtts"]
+
+[resource]
+shader = ExtResource("1_jdtts")
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/inner_color = Color(0.878458, 0.252992, 0.294493, 1)
+shader_parameter/inner_color_dead = Color(0, 0, 0, 1)
+shader_parameter/dead_amt = 0.0
