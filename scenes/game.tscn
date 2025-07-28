@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=30 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -16,6 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://b3ksaqieodvb4" path="res://scripts/game_over_scene.gd" id="12_dinhu"]
+[ext_resource type="Script" uid="uid://dikrc0p8v0nhg" path="res://scripts/health_counter_ui.gd" id="16_264po"]
+[ext_resource type="Shader" uid="uid://bsvqa1bum5mby" path="res://shaders/heart_ui.gdshader" id="16_ssvqc"]
+[ext_resource type="Texture2D" uid="uid://d207m54lqqt0b" path="res://sprites/health_counter_sprite.png" id="17_264po"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
 
@@ -41,9 +44,31 @@ size = Vector2(7.5, 576)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5unj"]
 size = Vector2(580.001, 4.99957)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kice"]
+shader = ExtResource("16_ssvqc")
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/inner_color = Color(0.754223, 0.163247, 0.245755, 1)
+shader_parameter/inner_color_dead = Color(0, 0, 0, 1)
+shader_parameter/dead_amt = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_264po"]
+shader = ExtResource("16_ssvqc")
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/inner_color = Color(0.754223, 0.163247, 0.245755, 1)
+shader_parameter/inner_color_dead = Color(0, 0, 0, 1)
+shader_parameter/dead_amt = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5newe"]
+shader = ExtResource("16_ssvqc")
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/inner_color = Color(0.754223, 0.163247, 0.245755, 1)
+shader_parameter/inner_color_dead = Color(0, 0, 0, 1)
+shader_parameter/dead_amt = 0.0
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Game" type="Node2D" parent="."]
+position = Vector2(0, -1)
 script = ExtResource("1_yepdu")
 power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
 projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po")])
@@ -57,8 +82,8 @@ parameters/looping = true
 [node name="Sprite2D" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
 material = SubResource("ShaderMaterial_kvuet")
-position = Vector2(360, 360.5)
-scale = Vector2(5.60938, 5.60156)
+position = Vector2(360, 360.75)
+scale = Vector2(5.625, 5.6289)
 texture = ExtResource("2_6nrea")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Game"]
@@ -128,68 +153,85 @@ offset_left = 260.0
 offset_top = 6.0
 offset_right = 453.0
 offset_bottom = 46.0
+script = ExtResource("16_264po")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Game/Health_Counter"]
 layout_mode = 0
-offset_right = 40.0
+offset_left = -210.0
+offset_right = -43.0
 offset_bottom = 40.0
+alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Game/Health_Counter/HBoxContainer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_1kice")
+position = Vector2(21, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("17_264po")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Game/Health_Counter/HBoxContainer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_264po")
+position = Vector2(53, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("17_264po")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Game/Health_Counter/HBoxContainer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_5newe")
+position = Vector2(85, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("17_264po")
 
 [node name="GameOver" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1280.0
+offset_right = 721.0
 offset_bottom = 720.0
 script = ExtResource("12_dinhu")
 
 [node name="ColorRect" type="ColorRect" parent="GameOver"]
 layout_mode = 0
-offset_right = 1278.0
+offset_right = 719.0
 offset_bottom = 721.0
 color = Color(0, 0, 0, 0.882353)
 
-[node name="Title" type="RichTextLabel" parent="GameOver"]
+[node name="TextContainer" type="VBoxContainer" parent="GameOver"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = 128.0
-offset_right = 1278.0
-offset_bottom = 260.0
+offset_right = 718.0
+offset_bottom = 722.0
+theme_override_constants/separation = 42
+alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="GameOver/TextContainer"]
+layout_mode = 2
 theme_override_font_sizes/normal_font_size = 64
 text = "You Broke"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stat_Label" type="RichTextLabel" parent="GameOver"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 270.0
-offset_right = 1280.0
-offset_bottom = 312.0
+[node name="StatsContainer" type="VBoxContainer" parent="GameOver/TextContainer"]
+layout_mode = 2
+
+[node name="Stat_Label" type="RichTextLabel" parent="GameOver/TextContainer/StatsContainer"]
+layout_mode = 2
 theme_override_font_sizes/normal_font_size = 24
 text = "You Lasted: "
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stat" type="RichTextLabel" parent="GameOver"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 327.0
-offset_right = 1280.0
-offset_bottom = 391.0
+[node name="Stat" type="RichTextLabel" parent="GameOver/TextContainer/StatsContainer"]
+layout_mode = 2
 theme_override_font_sizes/normal_font_size = 24
 text = "0"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Restart" type="RichTextLabel" parent="GameOver"]
-layout_mode = 0
-offset_left = -1.0
-offset_top = 441.0
-offset_right = 1278.0
-offset_bottom = 573.0
+[node name="Restart" type="RichTextLabel" parent="GameOver/TextContainer"]
+layout_mode = 2
 theme_override_font_sizes/normal_font_size = 42
 text = "Press Space To Restart"
 fit_content = true

@@ -1,6 +1,7 @@
 extends Node
 
 signal reset_game
+signal health_changed(amt: int)
 
 enum power_up_type {INVULNERABLE}
 enum projectile_type {BASIC_PROJECTILE, EX_PROJECTILE, INVULNERABLE_PROJECTILE}
@@ -15,7 +16,12 @@ var game_state: GameStateEnum = GameStateEnum.PLAYING:
 		return game_state
 
 @export var starting_health: int = 3
-var health: int = 3
+var health: int = 3:
+	set(val):
+		health = val
+		health_changed.emit(val)
+	get:
+		return health
 
 func take_damage(amount: int):
 	health -= amount 
