@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=30 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -19,6 +19,9 @@
 [ext_resource type="Script" uid="uid://dikrc0p8v0nhg" path="res://scripts/health_counter_ui.gd" id="16_264po"]
 [ext_resource type="Material" uid="uid://dd4ur6y4mff73" path="res://materials/heart_ui_mat.tres" id="17_1kice"]
 [ext_resource type="Texture2D" uid="uid://d207m54lqqt0b" path="res://sprites/health_counter_sprite.png" id="17_264po"]
+[ext_resource type="Script" uid="uid://cs2hitixv5fcw" path="res://scripts/score_counter.gd" id="19_1kice"]
+[ext_resource type="Texture2D" uid="uid://dq3ecrd7qk251" path="res://sprites/powerup_ui_border.png" id="20_37s47"]
+[ext_resource type="Script" uid="uid://bnahmnwkjjrn4" path="res://scripts/power_up_ui.gd" id="21_bt5mj"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
 
@@ -125,28 +128,76 @@ border = NodePath("../Ex_border")
 position = Vector2(52, 61)
 size = Vector2(620, 620)
 
-[node name="Health_Counter" type="Control" parent="Game"]
+[node name="UI" type="Control" parent="Game"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 260.0
-offset_top = 6.0
-offset_right = 453.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 718.0
 offset_bottom = 46.0
-script = ExtResource("16_264po")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Game/Health_Counter"]
-layout_mode = 0
-offset_left = -210.0
-offset_right = -43.0
+[node name="Heart_Counter" type="HBoxContainer" parent="Game/UI"]
+layout_mode = 1
+offset_left = -1.0
+offset_right = 166.0
 offset_bottom = 40.0
 alignment = 1
+script = ExtResource("16_264po")
 
-[node name="TextureRect" type="TextureRect" parent="Game/Health_Counter/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Game/UI/Heart_Counter"]
 texture_filter = 1
 material = ExtResource("17_1kice")
 layout_mode = 2
 texture = ExtResource("17_264po")
 stretch_mode = 3
+
+[node name="Score" type="RichTextLabel" parent="Game/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.5
+offset_top = -21.5
+offset_right = 59.5
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "0
+"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("19_1kice")
+
+[node name="PowerUp" type="TextureRect" parent="Game/UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -66.0
+offset_top = 3.0
+offset_right = -22.0
+offset_bottom = 47.0
+grow_horizontal = 0
+texture = ExtResource("20_37s47")
+script = ExtResource("21_bt5mj")
+
+[node name="PowerUp_Texture" type="TextureRect" parent="Game/UI/PowerUp"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="GameOver" type="Control" parent="."]
 visible = false
@@ -190,11 +241,12 @@ vertical_alignment = 1
 
 [node name="Stat" type="RichTextLabel" parent="GameOver/TextContainer/StatsContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 36
 text = "0"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("19_1kice")
 
 [node name="Restart" type="RichTextLabel" parent="GameOver/TextContainer"]
 layout_mode = 2

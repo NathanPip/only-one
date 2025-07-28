@@ -14,6 +14,7 @@ var power_up_timer: float = 0:
 				return
 			current_power_up._deactivate(self)
 			current_power_up = null
+			Globals.change_powerup.emit(null)
 			return
 		power_up_timer = val
 	get:

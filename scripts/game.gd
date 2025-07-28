@@ -31,6 +31,7 @@ func on_collision(proj: Projectile):
 		Globals.take_damage(1)
 	if powerups_map.has(proj.type):
 		player.set_power_up(powerups_map[proj.type].inst)
+		Globals.change_powerup.emit(proj.texture)
 
 func kill_projectile(proj: Projectile, index: int):
 	projectiles_map[proj.type].ready_projectiles.append(proj)

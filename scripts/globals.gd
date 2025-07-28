@@ -3,6 +3,8 @@ extends Node
 signal reset_game
 signal health_changed(amt: int)
 signal damage_taken
+signal count_up(amt: int)
+signal change_powerup(tex: Texture2D)
 
 enum power_up_type {INVULNERABLE}
 enum projectile_type {BASIC_PROJECTILE, EX_PROJECTILE, INVULNERABLE_PROJECTILE}
@@ -32,6 +34,7 @@ func take_damage(amount: int):
 
 var game_speed: float = 1
 var score: float = 0
+var next_second: int
 var game_node: Game
 var game_over_node: Control
 var menu_node: Control
@@ -50,9 +53,21 @@ func restart():
 	health = starting_health
 	game_speed = 1
 	score = 0
+	next_second = score + 1
+	count_up.emit(0)
 	pass
 
+func _process(delta: float) -> void:
+	if game_state != GameStateEnum.PLAYING:
+		return
+	score += delta
+	if score >= next_second:
+		next_second += 1
+		count_up.emit(int(score))
+
+
 func _ready() -> void:
+	next_second = score + 1
 	game_node = get_tree().get_root().get_node("Node2D").get_node("Game")
 	game_over_node = get_tree().get_root().get_node("Node2D").get_node("GameOver")
 	game_node.on_ready.connect(set_node_states)

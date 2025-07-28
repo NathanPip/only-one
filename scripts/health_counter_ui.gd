@@ -1,6 +1,5 @@
 extends Control
 
-var container: HBoxContainer
 var sprites: Array[TextureRect] = []
 
 func change_hearts(health: int):
@@ -13,12 +12,11 @@ func change_hearts(health: int):
 
 func _ready() -> void:
 	Globals.health_changed.connect(change_hearts)
-	container = get_node("HBoxContainer")
-	var heart = container.get_node("TextureRect")
+	var heart = get_node("TextureRect")
 	sprites.append(heart)
 	for h in range(Globals.health-1):
 		var nh = heart.duplicate()
 		nh.material = heart.material.duplicate()
-		container.add_child(nh)
+		add_child(nh)
 		sprites.append(nh)
 	pass
