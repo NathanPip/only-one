@@ -1,5 +1,7 @@
 extends PowerUp
 
+
+
 func _activate(player: Player):
     player.invulnerable = true
     pass

@@ -91,6 +91,14 @@ func setup_powerups(powerups: Array[PowerUpRes]):
 			projectiles.append(p_inst)
 		ready_powerup_projectiles_map[inst.power_up_type] = p
 
+func reset():
+	for proj in projectiles:
+		proj.global_position = starting_spawn
+		proj.fired = false
+	proj_timer.wait_time = 1
+	powerup_timer.wait_time = randf_range(powerup_wait_range.x, powerup_wait_range.y)
+	pass
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	proj_timer = get_node("Projectile_Timer")
@@ -107,6 +115,7 @@ func _ready() -> void:
 		if child is SpawnerGroup:
 			spawner_groups.append(child)
 
+	Globals.reset_game.connect(reset)
 	instantiate_projectiles(projectile_count, ready_projectiles, projectile_scene)
 	setup_powerups(power_up_resources)
 

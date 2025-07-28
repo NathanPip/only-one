@@ -3,9 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="1_8ss4t"]
 [ext_resource type="Script" uid="uid://ciots22qctyu4" path="res://scripts/ex.gd" id="2_ro54v"]
 
-[node name="Ex" type="Sprite2D" node_paths=PackedStringArray("border")]
+[node name="Ex" type="Node2D"]
+script = ExtResource("2_ro54v")
+
+[node name="Ex_sprite" type="Sprite2D" parent="."]
 modulate = Color(0.672242, 0.00597603, 0.260212, 1)
 scale = Vector2(2, 2)
 texture = ExtResource("1_8ss4t")
-script = ExtResource("2_ro54v")
-border = NodePath("")

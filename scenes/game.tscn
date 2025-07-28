@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=20 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -11,6 +11,7 @@
 [ext_resource type="Shader" uid="uid://c12oegfjt1476" path="res://shaders/bg.gdshader" id="5_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
+[ext_resource type="Script" uid="uid://b3ksaqieodvb4" path="res://scripts/game_over_scene.gd" id="12_dinhu"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
 
@@ -35,25 +36,6 @@ size = Vector2(19, 576)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5unj"]
 size = Vector2(665, 16)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ir15t"]
-frequency = 0.0126
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ca42v"]
-noise = SubResource("FastNoiseLite_ir15t")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_rysoc"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ssvqc"]
-noise = SubResource("FastNoiseLite_rysoc")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_264po"]
-shader = ExtResource("5_kvpfn")
-shader_parameter/noise = SubResource("NoiseTexture2D_ca42v")
-shader_parameter/noise2 = SubResource("NoiseTexture2D_ssvqc")
-shader_parameter/speed = 0.0
-shader_parameter/lightness = 0.2
-shader_parameter/pixelate_amt = 26.8
 
 [node name="Node2D" type="Node2D"]
 
@@ -101,7 +83,7 @@ position = Vector2(544, 615)
 shape = SubResource("RectangleShape2D_q5unj")
 
 [node name="Player" parent="Game" instance=ExtResource("1_4jkwy")]
-position = Vector2(533, 313)
+position = Vector2(601, 351)
 speed = 700.0
 
 [node name="Spawner_Group4" parent="Game" instance=ExtResource("4_s716r")]
@@ -135,13 +117,63 @@ position = Vector2(240, 52)
 size = Vector2(750, 640)
 
 [node name="GameOver" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1280.0
+offset_bottom = 720.0
+script = ExtResource("12_dinhu")
 
 [node name="ColorRect" type="ColorRect" parent="GameOver"]
-material = SubResource("ShaderMaterial_264po")
 layout_mode = 0
-offset_right = 68.0
-offset_bottom = 62.0
+offset_right = 1278.0
+offset_bottom = 721.0
+color = Color(0, 0, 0, 0.882353)
+
+[node name="Title" type="RichTextLabel" parent="GameOver"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 128.0
+offset_right = 1278.0
+offset_bottom = 260.0
+theme_override_font_sizes/normal_font_size = 64
+text = "You Broke"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stat_Label" type="RichTextLabel" parent="GameOver"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 270.0
+offset_right = 1280.0
+offset_bottom = 312.0
+theme_override_font_sizes/normal_font_size = 24
+text = "You Lasted: "
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Stat" type="RichTextLabel" parent="GameOver"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 327.0
+offset_right = 1280.0
+offset_bottom = 391.0
+theme_override_font_sizes/normal_font_size = 24
+text = "0"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Restart" type="RichTextLabel" parent="GameOver"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 441.0
+offset_right = 1278.0
+offset_bottom = 573.0
+theme_override_font_sizes/normal_font_size = 42
+text = "Press Space To Restart"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1

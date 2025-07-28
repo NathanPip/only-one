@@ -18,7 +18,7 @@ func prepare_projectile(proj: Projectile, speed_range: Vector2):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	game_node = get_tree().get_root().get_node("Game")
+	game_node = get_tree().get_root().get_node("Node2D").get_node("Game")
 	for child in get_children():
 		if child is Spawner:
 			spawners.append(child)
