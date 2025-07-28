@@ -5,10 +5,12 @@ extends Node2D
 signal on_ready
 
 const projectile_scene = preload("res://scenes/projectile.tscn")
+const ex_projectile_scene = preload("res://scenes/ex_basic_projectile.tscn")
 const invulnerable_powerup_scene = preload("res://scenes/invulnerable_power_up.tscn")
 
 var spawner_groups: Array[SpawnerGroup] = []
 var ready_projectiles: Array[Projectile] = []
+var ready_ex_projectiles: Array[Projectile] = []
 var fired_projectiles: Array[Projectile] = []
 var powerups_map: Dictionary = {}
 
@@ -125,6 +127,7 @@ func _ready() -> void:
 
 	Globals.reset_game.connect(reset)
 	instantiate_projectiles(projectile_count, ready_projectiles, projectile_scene)
+	instantiate_projectiles(projectile_count, ready_ex_projectiles, ex_projectile_scene)
 	setup_powerups(power_up_resources)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
