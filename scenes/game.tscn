@@ -36,10 +36,10 @@ shader_parameter/lightness = 0.115
 shader_parameter/pixelate_amt = 53.16
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
-size = Vector2(19, 576)
+size = Vector2(7.5, 576)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5unj"]
-size = Vector2(665, 16)
+size = Vector2(580.001, 4.99957)
 
 [node name="Node2D" type="Node2D"]
 
@@ -57,13 +57,13 @@ parameters/looping = true
 [node name="Sprite2D" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
 material = SubResource("ShaderMaterial_kvuet")
-position = Vector2(639, 360.5)
-scale = Vector2(9.96875, 5.60156)
+position = Vector2(360, 360.5)
+scale = Vector2(5.60938, 5.60156)
 texture = ExtResource("2_6nrea")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Game"]
 texture_filter = 1
-position = Vector2(617, 370)
+position = Vector2(361, 370)
 scale = Vector2(3, 3)
 texture = ExtResource("2_iylc6")
 
@@ -72,38 +72,38 @@ position = Vector2(-180.667, -108.333)
 scale = Vector2(0.333333, 0.333333)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
-position = Vector2(202, 325)
+position = Vector2(255.751, 324.999)
 shape = SubResource("RectangleShape2D_4v5xx")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
-position = Vector2(882, 324)
+position = Vector2(828.002, 324.999)
 shape = SubResource("RectangleShape2D_4v5xx")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
-position = Vector2(544, 35)
+position = Vector2(544.002, 39.999)
 shape = SubResource("RectangleShape2D_q5unj")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Game/Sprite2D2/boundaries"]
-position = Vector2(544, 615)
+position = Vector2(541.002, 609.5)
 shape = SubResource("RectangleShape2D_q5unj")
 
 [node name="Player" parent="Game" instance=ExtResource("1_4jkwy")]
-position = Vector2(601, 351)
+position = Vector2(345, 351)
 speed = 500.0
 
 [node name="Spawner_Group4" parent="Game" instance=ExtResource("4_s716r")]
 position = Vector2(-8, 392)
 
 [node name="Spawner_Group6" parent="Game" instance=ExtResource("4_s716r")]
-position = Vector2(586, -7)
+position = Vector2(323, -4)
 rotation = 1.5708
 
 [node name="Spawner_Group7" parent="Game" instance=ExtResource("4_s716r")]
-position = Vector2(630, 740)
+position = Vector2(383, 727)
 rotation = -1.5708
 
 [node name="Spawner_Group5" parent="Game" instance=ExtResource("4_s716r")]
-position = Vector2(1281, 339)
+position = Vector2(727, 339)
 rotation = 3.14159
 
 [node name="Projectile_Timer" type="Timer" parent="Game"]
@@ -118,8 +118,21 @@ position = Vector2(241, 213)
 border = NodePath("../Ex_border")
 
 [node name="Ex_border" parent="Game" instance=ExtResource("11_kvuet")]
-position = Vector2(240, 52)
-size = Vector2(750, 640)
+position = Vector2(52, 61)
+size = Vector2(620, 620)
+
+[node name="Health_Counter" type="Control" parent="Game"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 260.0
+offset_top = 6.0
+offset_right = 453.0
+offset_bottom = 46.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Game/Health_Counter"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="GameOver" type="Control" parent="."]
 visible = false
