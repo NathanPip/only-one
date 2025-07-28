@@ -4,10 +4,8 @@ extends Sprite2D
 @export var speed: float = 200
 @export var size: float = 16
 @export var fired: bool = false
+@export var type: Globals.projectile_type
 var direction: Vector2 = Vector2(1, 0)
-
-func _on_impact(player: Player):
-	pass
 
 func _move(delta: float):
 	self.position += self.direction*self.speed * delta

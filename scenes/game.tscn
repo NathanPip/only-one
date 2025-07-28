@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=24 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -6,9 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://cyxrq6elvvesr" path="res://sprites/game_area.png" id="2_iylc6"]
 [ext_resource type="Script" uid="uid://dqsoql4t4daj8" path="res://resources/power_up_resource.gd" id="2_vtaks"]
 [ext_resource type="Resource" uid="uid://bimi2fbtuicjy" path="res://resources/invulnerable_res.tres" id="3_kvpfn"]
+[ext_resource type="Script" uid="uid://qtewlci5v3kf" path="res://resources/projectile_resource.gd" id="4_ca42v"]
 [ext_resource type="AudioStream" uid="uid://ck2k8mo21n2or" path="res://sounds/sad_one_new_mix.mp3" id="4_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
 [ext_resource type="Shader" uid="uid://c12oegfjt1476" path="res://shaders/bg.gdshader" id="5_kvpfn"]
+[ext_resource type="Resource" uid="uid://bhpqfnimvhmfu" path="res://resources/ex_projectile.tres" id="5_rysoc"]
+[ext_resource type="Resource" uid="uid://l7ywvykiwbfi" path="res://resources/invulnerable_projectile.tres" id="6_ssvqc"]
+[ext_resource type="Resource" uid="uid://4haov2c5asjb" path="res://resources/basic_projectile.tres" id="7_264po"]
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://b3ksaqieodvb4" path="res://scripts/game_over_scene.gd" id="12_dinhu"]
@@ -42,6 +46,7 @@ size = Vector2(665, 16)
 [node name="Game" type="Node2D" parent="."]
 script = ExtResource("1_yepdu")
 power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
+projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po")])
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource("4_dinhu")

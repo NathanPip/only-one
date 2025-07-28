@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProjectileResource" load_steps=3 format=3 uid="uid://bhpqfnimvhmfu"]
+
+[ext_resource type="PackedScene" uid="uid://dgnyh41rryk42" path="res://scenes/ex_basic_projectile.tscn" id="1_cxfso"]
+[ext_resource type="Script" uid="uid://qtewlci5v3kf" path="res://resources/projectile_resource.gd" id="1_lf855"]
+
+[resource]
+script = ExtResource("1_lf855")
+type = 1
+speed_range = Vector2(100, 200)
+instantiation_count = 60
+projectile_scene = ExtResource("1_cxfso")
+metadata/_custom_type_script = "uid://qtewlci5v3kf"

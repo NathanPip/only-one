@@ -3,6 +3,7 @@ extends Node
 signal reset_game
 
 enum power_up_type {INVULNERABLE}
+enum projectile_type {BASIC_PROJECTILE, EX_PROJECTILE, INVULNERABLE_PROJECTILE}
 enum GameStateEnum {GAMEOVER, MENU, PAUSE, PLAYING}
 
 @export var starting_game_state: GameStateEnum = GameStateEnum.PLAYING
@@ -14,13 +15,13 @@ var game_state: GameStateEnum = GameStateEnum.PLAYING:
 		return game_state
 
 @export var starting_health: int = 3
-var health: int = 3:
-	set(val):
-		health = val
-		if val <= 0:
-			game_state = GameStateEnum.GAMEOVER
-	get:
-		return health
+var health: int = 3
+
+func take_damage(amount: int):
+	health -= amount 
+	if health <= 0:
+		game_state = GameStateEnum.GAMEOVER
+
 var game_speed: float = 1
 var score: float = 0
 var game_node: Game

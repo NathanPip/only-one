@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProjectileResource" load_steps=3 format=3 uid="uid://l7ywvykiwbfi"]
+
+[ext_resource type="PackedScene" uid="uid://bh1l66v6lfj5u" path="res://scenes/invulnerable_power_up_projectile.tscn" id="1_0a1ng"]
+[ext_resource type="Script" uid="uid://qtewlci5v3kf" path="res://resources/projectile_resource.gd" id="1_0idjf"]
+
+[resource]
+script = ExtResource("1_0idjf")
+type = 2
+speed_range = Vector2(100, 200)
+instantiation_count = 10
+projectile_scene = ExtResource("1_0a1ng")
+metadata/_custom_type_script = "uid://qtewlci5v3kf"

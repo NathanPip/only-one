@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cx3r6howwyucd"]
 
 [ext_resource type="Texture2D" uid="uid://cwrb7d4i5mynp" path="res://sprites/spike.png" id="1_3ijri"]
-[ext_resource type="Script" uid="uid://bnd7c0g1h604n" path="res://scripts/basic_obstacle.gd" id="2_q3m7n"]
+[ext_resource type="Script" uid="uid://bmrhs6t42hu6d" path="res://scripts/projectile.gd" id="2_q3m7n"]
 
 [node name="Projectile" type="Sprite2D"]
 texture_filter = 1

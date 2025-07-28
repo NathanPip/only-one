@@ -1,10 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://18x460pwc4kt"]
 
 [ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="1_j7my0"]
-[ext_resource type="Script" uid="uid://ce83h4mgcvbc3" path="res://scripts/power_up_projectile.gd" id="2_ig136"]
+
+[sub_resource type="GDScript" id="GDScript_j7my0"]
+script/source = "extends Projectile
+"
 
 [node name="PowerUp" type="Sprite2D"]
 modulate = Color(1, 0.0235294, 1, 1)
 texture_filter = 1
 texture = ExtResource("1_j7my0")
-script = ExtResource("2_ig136")
+script = SubResource("GDScript_j7my0")

@@ -48,7 +48,7 @@ func basic_attack(delta: float):
 	current_attack_time += delta
 	if current_attack_time >= next_attack_time:
 		next_attack_time += 1/basic_attack_fire_rate
-		var proj = game_node.ready_ex_projectiles.pop_front()
+		var proj = game_node.projectiles_map[Globals.projectile_type.EX_PROJECTILE].ready_projectiles.pop_front()
 		proj.direction = self.position.direction_to(player_node.position)
 		proj.position = self.position
 		game_node.spawn_projectile(proj)
@@ -90,7 +90,6 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	print(current_state)
 	if current_state == ExState.TRAVELING:
 		travel(delta)
 	if current_state == ExState.ATTACKING:

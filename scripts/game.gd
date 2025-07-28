@@ -1,18 +1,12 @@
 class_name Game
 extends Node2D
 
-
 signal on_ready
 
-const projectile_scene = preload("res://scenes/projectile.tscn")
-const ex_projectile_scene = preload("res://scenes/ex_basic_projectile.tscn")
-const invulnerable_powerup_scene = preload("res://scenes/invulnerable_power_up.tscn")
-
 var spawner_groups: Array[SpawnerGroup] = []
-var ready_projectiles: Array[Projectile] = []
-var ready_ex_projectiles: Array[Projectile] = []
 var fired_projectiles: Array[Projectile] = []
-var powerups_map: Dictionary = {}
+var powerups_map: Dictionary[Globals.power_up_type, PowerUpRes] = {}
+var projectiles_map: Dictionary[Globals.power_up_type, ProjectileResource] = {}
 
 var projectiles: Array[Projectile] = []
 var player: Player 
@@ -20,24 +14,26 @@ var proj_timer: Timer
 var powerup_timer: Timer 
 var starting_spawn = Vector2(-100, -100)
 
-@export var power_up_resources: Array[PowerUpRes]
+@export var power_up_resources: Array[PowerUpRes] = []
+@export var projectile_resources: Array[ProjectileResource] = []
 @export var proj_wait_range: Vector2 = Vector2(.2, .8)
 @export var powerup_wait_range: Vector2 = Vector2(15, 45)
-@export var projectile_count: int = 100
-@export var powerup_count: int = 3
-
-@export var projectile_speed_range: Vector2 = Vector2(100, 200)
 
 func collision_check(proj: Projectile) -> bool:
 	if proj.position.x-proj.size/2 < player.position.x + 24 && proj.position.x + proj.size/2 > player.position.x - 24 && proj.position.y - proj.size/2 < player.position.y + 24 && proj.position.y + proj.size/2 > player.position.y - 24:
 		return true
 	return false
 
+func on_collision(proj: Projectile):
+	if proj.type == Globals.projectile_type.BASIC_PROJECTILE:
+		Globals.take_damage(1)
+	elif proj.type == Globals.projectile_type.EX_PROJECTILE:
+		Globals.take_damage(1)
+	if powerups_map.has(proj.type):
+		player.set_power_up(powerups_map[proj.type].inst)
+
 func kill_projectile(proj: Projectile, index: int):
-	if proj is PowerUpProjectile:
-		powerups_map[proj.power_up.type].ready_projectiles.append(proj)
-	else:
-		ready_projectiles.append(proj)
+	projectiles_map[proj.type].ready_projectiles.append(proj)
 	fired_projectiles.remove_at(index)
 	proj.fired = false
 	proj.visible = false
@@ -55,9 +51,10 @@ func choose_spawner() -> SpawnerGroup:
 
 func _on_proj_timeout():
 	var spawner = choose_spawner()
-	var proj = ready_projectiles.pop_front()
+	var proj_res = projectiles_map[Globals.projectile_type.BASIC_PROJECTILE] 
+	var proj = proj_res.ready_projectiles.pop_front()
 	if proj != null:
-		spawner.prepare_projectile(proj, projectile_speed_range)
+		spawner.prepare_projectile(proj, proj_res.speed_range)
 		spawn_projectile(proj)
 	var rand = randf_range(proj_wait_range.x, proj_wait_range.y)
 	proj_timer.wait_time = rand
@@ -66,44 +63,52 @@ func _on_powerup_timeout():
 	var spawner = choose_spawner()
 	var keys = powerups_map.keys()
 	var rand_power_up = randi_range(0, keys.size()-1)
-	var ready_powerups = powerups_map[keys[rand_power_up]]
-	var speed_range = ready_powerups.speed_range
-	var pup = ready_powerups.ready_projectiles.pop_front()
+	var power_up = powerups_map[keys[rand_power_up]]
+	var speed_range = projectiles_map[power_up.projectile_type].speed_range
+	var pup = projectiles_map[power_up.projectile_type].ready_projectiles.pop_front()
+	print(pup)
 	if pup != null:
 		spawner.prepare_projectile(pup, speed_range)
 		spawn_projectile(pup)
 	var rand = randf_range(powerup_wait_range.x, powerup_wait_range.y)
 	powerup_timer.wait_time = rand
 
-func instantiate_projectiles(count: int, list: Array[Projectile], proj_scene: PackedScene):
-	for i in range(count):
-		var proj = proj_scene.instantiate()
-		self.add_child.call_deferred(proj)
-		proj.global_position = starting_spawn 
-		list.append(proj)	
-		projectiles.append(proj)
+func setup_projectiles(projectiles: Array[ProjectileResource]):
+	for proj in projectiles:
+		if projectiles_map.has(proj.type):
+			print("multiple projectile resources present")
+			get_tree().quit()
+			return
+		if proj.projectile_scene == null:
+			print("no projectile scene present in projectile ", proj.type)
+			get_tree().quit()
+			return
+		for i in range(proj.instantiation_count):
+			var inst = proj.projectile_scene.instantiate() as Projectile
+			inst.type = proj.type
+			self.add_child(inst)
+			inst.global_position = starting_spawn 
+			proj.ready_projectiles.append(inst)
+			projectiles.append(inst)
+		projectiles_map[proj.type] = proj
 
 func setup_powerups(powerups: Array[PowerUpRes]):
 	for p in powerups:
-		var inst = p.powerup.instantiate()
-		inst.type = p.type
-		if powerups_map.has(p.type):
+		var inst = p.powerup.instantiate() as PowerUp
+		inst.type = p.projectile_type
+		p.inst = inst
+		if powerups_map.has(p.projectile_type):
 			print("double powerups exists")
 			get_tree().quit()
 			return
 		self.add_child(inst)
-		for i in range(powerup_count):
-			var p_inst = p.projectile.instantiate() as PowerUpProjectile
-			p_inst.power_up = inst
-			self.add_child(p_inst)
-			p.ready_projectiles.append(p_inst)
-			projectiles.append(p_inst)
-		powerups_map[p.type] = p
+		powerups_map[p.projectile_type] = p
 
 func reset():
-	for proj in projectiles:
+	for proj in fired_projectiles:
 		proj.global_position = starting_spawn
 		proj.fired = false
+		projectiles_map[proj.type].ready_projectiles.append(proj)
 	proj_timer.wait_time = 1
 	powerup_timer.wait_time = randf_range(powerup_wait_range.x, powerup_wait_range.y)
 	on_ready.emit()
@@ -126,8 +131,7 @@ func _ready() -> void:
 			spawner_groups.append(child)
 
 	Globals.reset_game.connect(reset)
-	instantiate_projectiles(projectile_count, ready_projectiles, projectile_scene)
-	instantiate_projectiles(projectile_count, ready_ex_projectiles, ex_projectile_scene)
+	setup_projectiles(projectile_resources)
 	setup_powerups(power_up_resources)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -140,7 +144,7 @@ func _process(delta: float) -> void:
 			continue
 		proj._move(delta)
 		if collision_check(proj) && !player.invulnerable:
-			proj._on_impact(player)
+			on_collision(proj)	
 			kill_projectile(proj, i)
 			continue
 		if proj.position.x > 2000 || proj.position.x < -300 || proj.position.y > 2000 || proj.position.y < -300:
