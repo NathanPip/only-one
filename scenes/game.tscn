@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
 [ext_resource type="Texture2D" uid="uid://do6therr0ir7b" path="res://sprites/icon.svg" id="2_6nrea"]
 [ext_resource type="Texture2D" uid="uid://cyxrq6elvvesr" path="res://sprites/game_area.png" id="2_iylc6"]
-[ext_resource type="AudioStream" uid="uid://bfcpdxmduv1c7" path="res://sounds/sad_one.mp3" id="2_u5sy4"]
 [ext_resource type="Script" uid="uid://dqsoql4t4daj8" path="res://resources/power_up_resource.gd" id="2_vtaks"]
 [ext_resource type="Resource" uid="uid://bimi2fbtuicjy" path="res://resources/invulnerable_res.tres" id="3_kvpfn"]
+[ext_resource type="AudioStream" uid="uid://ck2k8mo21n2or" path="res://sounds/sad_one_new_mix.mp3" id="4_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
 [ext_resource type="Shader" uid="uid://c12oegfjt1476" path="res://shaders/bg.gdshader" id="5_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
@@ -44,7 +44,7 @@ script = ExtResource("1_yepdu")
 power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game"]
-stream = ExtResource("2_u5sy4")
+stream = ExtResource("4_dinhu")
 volume_db = -5.0
 autoplay = true
 parameters/looping = true
