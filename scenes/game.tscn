@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=32 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="AudioStream" uid="uid://dxa0nmghjkrbl" path="res://sounds/gated_breath.mp3" id="1_qnb83"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://b3ksaqieodvb4" path="res://scripts/game_over_scene.gd" id="12_dinhu"]
+[ext_resource type="Resource" uid="uid://cpxshd506k76n" path="res://resources/heart_up.tres" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://dikrc0p8v0nhg" path="res://scripts/health_counter_ui.gd" id="16_264po"]
 [ext_resource type="Material" uid="uid://dd4ur6y4mff73" path="res://materials/heart_ui_mat.tres" id="17_1kice"]
 [ext_resource type="Texture2D" uid="uid://d207m54lqqt0b" path="res://sprites/health_counter_sprite.png" id="17_264po"]
@@ -88,8 +89,8 @@ script = ExtResource("2_suyxu")
 position = Vector2(0, -1)
 script = ExtResource("1_yepdu")
 power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
-projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po")])
-powerup_wait_range = Vector2(10, 20)
+projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po"), ExtResource("14_suyxu")])
+powerup_wait_range = Vector2(7, 18)
 
 [node name="Sprite2D" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
@@ -148,6 +149,9 @@ autostart = true
 
 [node name="Powerup_Timer" type="Timer" parent="Game"]
 wait_time = 2.0
+autostart = true
+
+[node name="Heart_Timer" type="Timer" parent="Game"]
 autostart = true
 
 [node name="Ex" parent="Game" node_paths=PackedStringArray("border") instance=ExtResource("10_dinhu")]

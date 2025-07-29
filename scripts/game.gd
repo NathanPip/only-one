@@ -12,12 +12,14 @@ var projectiles: Array[Projectile] = []
 var player: Player 
 var proj_timer: Timer 
 var powerup_timer: Timer 
+var heart_timer: Timer
 var starting_spawn = Vector2(-100, -100)
 
 @export var power_up_resources: Array[PowerUpRes] = []
 @export var projectile_resources: Array[ProjectileResource] = []
 @export var proj_wait_range: Vector2 = Vector2(.2, .8)
 @export var powerup_wait_range: Vector2 = Vector2(15, 45)
+@export var heart_wait_range: Vector2 = Vector2(10, 15)
 
 func on_gamestate_change(state: Globals.GameStateEnum):
 	if state != Globals.GameStateEnum.PLAYING:
@@ -38,6 +40,8 @@ func on_collision(proj: Projectile):
 		Globals.take_damage(1)
 	elif proj.type == Globals.projectile_type.EX_PROJECTILE:
 		Globals.take_damage(1)
+	elif proj.type == Globals.projectile_type.HEART_UP_PROJECTILE:
+		Globals.health += 1
 	if powerups_map.has(proj.type):
 		player.set_power_up(powerups_map[proj.type].inst)
 		Globals.change_powerup.emit(proj.texture)
@@ -82,6 +86,17 @@ func _on_powerup_timeout():
 		spawn_projectile(pup)
 	var rand = randf_range(powerup_wait_range.x, powerup_wait_range.y)
 	powerup_timer.wait_time = rand
+
+func on_heart_timeout():
+	if Globals.health < Globals.starting_health:
+		var spawner = choose_spawner()
+		var proj_res = projectiles_map[Globals.projectile_type.HEART_UP_PROJECTILE] 
+		var proj = proj_res.ready_projectiles.pop_front()
+		if proj != null:
+			spawner.prepare_projectile(proj, proj_res.speed_range*Globals.game_speed)
+			spawn_projectile(proj)
+	var rand = randf_range(heart_wait_range.x/Globals.game_speed, heart_wait_range.y/Globals.game_speed)
+	heart_timer.wait_time = rand
 
 func setup_projectiles(projectiles: Array[ProjectileResource]):
 	for proj in projectiles:
@@ -131,8 +146,10 @@ func reset():
 func _ready() -> void:
 	proj_timer = get_node("Projectile_Timer")
 	powerup_timer = get_node("Powerup_Timer")
+	heart_timer = get_node("Heart_Timer")
 	proj_timer.timeout.connect(_on_proj_timeout)
 	powerup_timer.timeout.connect(_on_powerup_timeout)
+	heart_timer.timeout.connect(on_heart_timeout)
 	powerup_timer.wait_time = randf_range(powerup_wait_range.x, powerup_wait_range.y)
 	player = self.get_node("Player")
 	if player == null:

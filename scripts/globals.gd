@@ -9,7 +9,7 @@ signal change_gamestate(state: GameStateEnum)
 
 
 enum power_up_type {INVULNERABLE}
-enum projectile_type {BASIC_PROJECTILE, EX_PROJECTILE, INVULNERABLE_PROJECTILE}
+enum projectile_type {BASIC_PROJECTILE, EX_PROJECTILE, INVULNERABLE_PROJECTILE, HEART_UP_PROJECTILE}
 enum GameStateEnum {GAMEOVER, MENU, PAUSE, PLAYING}
 
 @export var starting_game_state: GameStateEnum = GameStateEnum.MENU
