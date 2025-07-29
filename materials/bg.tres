@@ -16,8 +16,13 @@ noise = SubResource("FastNoiseLite_kvuet")
 
 [resource]
 shader = ExtResource("1_bhwf3")
+shader_parameter/damage_color = Color(1, 0, 0, 1)
 shader_parameter/noise = SubResource("NoiseTexture2D_dinhu")
 shader_parameter/noise2 = SubResource("NoiseTexture2D_trtic")
 shader_parameter/speed = 0.09
 shader_parameter/lightness = 0.115
 shader_parameter/pixelate_amt = 53.16
+shader_parameter/damage_amt = 0.0
+shader_parameter/flash_amt = 0.5
+shader_parameter/shake_amt = 0.01
+shader_parameter/shake_speed = 3.0

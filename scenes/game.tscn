@@ -92,7 +92,7 @@ power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
 projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po"), ExtResource("14_suyxu")])
 powerup_wait_range = Vector2(7, 18)
 
-[node name="Sprite2D" type="Sprite2D" parent="Game"]
+[node name="Background" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
 material = ExtResource("9_bt5mj")
 position = Vector2(360, 360.75)
@@ -234,6 +234,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GameOver" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 721.0

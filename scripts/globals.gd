@@ -32,15 +32,19 @@ var health: int = 3:
 func take_damage(amount: int):
 	health -= amount 
 	damage_taken.emit()
+	damage_anim_time = starting_damage_anim_time
 	if health <= 0:
 		game_state = GameStateEnum.GAMEOVER
 
 var game_speed: float = 1
 var score: float = 0
+var starting_damage_anim_time: float = 1
+var damage_anim_time: float = 0
 var next_second: int
 var game_node: Game
 var game_over_node: Control
 var menu_node: Control
+var background: Sprite2D
 var main_chord: MusicStream
 var piano_loop: MusicStream
 var heart_beat: MusicStream
@@ -52,7 +56,6 @@ func update_music(streams: Array[MusicStream]):
 	for s in streams:
 		if score < s.score_start || s.always_playing:
 			continue
-		print(s.volume_db)
 		s.volume_db = s.starting_db + min(sqrt((score-s.score_start)/(s.score_limit-s.score_start)), 1) * (s.max_db-s.starting_db)
 
 
@@ -67,6 +70,12 @@ func set_node_states():
 	menu_node.set_process_input(game_state == GameStateEnum.MENU)
 	menu_node.visible = game_state == GameStateEnum.MENU
 
+func play_damage_anim():
+	var anim_amt = sin(damage_anim_time*PI)
+	print(anim_amt)
+	background.material.set_shader_parameter("damage_amt", anim_amt)
+	pass
+
 func restart():
 	game_state = GameStateEnum.PLAYING
 	health = starting_health
@@ -80,6 +89,9 @@ func _process(delta: float) -> void:
 	game_speed += delta/100
 	if game_state != GameStateEnum.PLAYING:
 		return
+	if damage_anim_time >= 0:
+		play_damage_anim()
+		damage_anim_time -= delta
 	update_music(music_streams)
 	score += delta
 	if score >= next_second:
@@ -92,6 +104,7 @@ func _ready() -> void:
 	var main_node = get_tree().get_root().get_node("Node2D")
 	game_node = main_node.get_node("Game")
 	game_over_node = main_node.get_node("GameOver")
+	background = game_node.get_node("Background")
 	menu_node = main_node.get_node("MainMenu")
 	main_chord = main_node.get_node("Main_Chord")
 	fast_synth = main_node.get_node("Fast_Synth")
