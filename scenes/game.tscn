@@ -1,42 +1,34 @@
-[gd_scene load_steps=27 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=32 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
+[ext_resource type="AudioStream" uid="uid://dxa0nmghjkrbl" path="res://sounds/gated_breath.mp3" id="1_qnb83"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
 [ext_resource type="Texture2D" uid="uid://do6therr0ir7b" path="res://sprites/icon.svg" id="2_6nrea"]
 [ext_resource type="Texture2D" uid="uid://cyxrq6elvvesr" path="res://sprites/game_area.png" id="2_iylc6"]
+[ext_resource type="Script" uid="uid://bfaittm8caky5" path="res://scripts/song_controls.gd" id="2_suyxu"]
+[ext_resource type="AudioStream" uid="uid://bg4bad7l2iqvx" path="res://sounds/fast_synth_beat.mp3" id="2_sww3w"]
 [ext_resource type="Script" uid="uid://dqsoql4t4daj8" path="res://resources/power_up_resource.gd" id="2_vtaks"]
 [ext_resource type="Resource" uid="uid://bimi2fbtuicjy" path="res://resources/invulnerable_res.tres" id="3_kvpfn"]
+[ext_resource type="AudioStream" uid="uid://004jeu4youep" path="res://sounds/heart_beat.mp3" id="3_suyxu"]
 [ext_resource type="Script" uid="uid://qtewlci5v3kf" path="res://resources/projectile_resource.gd" id="4_ca42v"]
-[ext_resource type="AudioStream" uid="uid://ck2k8mo21n2or" path="res://sounds/sad_one_new_mix.mp3" id="4_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
-[ext_resource type="Shader" uid="uid://c12oegfjt1476" path="res://shaders/bg.gdshader" id="5_kvpfn"]
+[ext_resource type="AudioStream" uid="uid://bn0xc28xr4476" path="res://sounds/piano_loop.mp3" id="4_sgl2t"]
+[ext_resource type="AudioStream" uid="uid://bk5ed6o4fs3ed" path="res://sounds/main_chord_progression.mp3" id="5_qouja"]
 [ext_resource type="Resource" uid="uid://bhpqfnimvhmfu" path="res://resources/ex_projectile.tres" id="5_rysoc"]
 [ext_resource type="Resource" uid="uid://l7ywvykiwbfi" path="res://resources/invulnerable_projectile.tres" id="6_ssvqc"]
 [ext_resource type="Resource" uid="uid://4haov2c5asjb" path="res://resources/basic_projectile.tres" id="7_264po"]
+[ext_resource type="Material" uid="uid://dw1p3eu1kr11q" path="res://materials/bg.tres" id="9_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://b3ksaqieodvb4" path="res://scripts/game_over_scene.gd" id="12_dinhu"]
+[ext_resource type="Resource" uid="uid://cpxshd506k76n" path="res://resources/heart_up.tres" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://dikrc0p8v0nhg" path="res://scripts/health_counter_ui.gd" id="16_264po"]
 [ext_resource type="Material" uid="uid://dd4ur6y4mff73" path="res://materials/heart_ui_mat.tres" id="17_1kice"]
 [ext_resource type="Texture2D" uid="uid://d207m54lqqt0b" path="res://sprites/health_counter_sprite.png" id="17_264po"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dinhu"]
-noise = SubResource("FastNoiseLite_kvpfn")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvuet"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trtic"]
-noise = SubResource("FastNoiseLite_kvuet")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvuet"]
-shader = ExtResource("5_kvpfn")
-shader_parameter/noise = SubResource("NoiseTexture2D_dinhu")
-shader_parameter/noise2 = SubResource("NoiseTexture2D_trtic")
-shader_parameter/speed = 0.09
-shader_parameter/lightness = 0.115
-shader_parameter/pixelate_amt = 53.16
+[ext_resource type="Script" uid="uid://cs2hitixv5fcw" path="res://scripts/score_counter.gd" id="19_1kice"]
+[ext_resource type="Texture2D" uid="uid://dq3ecrd7qk251" path="res://sprites/powerup_ui_border.png" id="20_37s47"]
+[ext_resource type="Script" uid="uid://bnahmnwkjjrn4" path="res://scripts/power_up_ui.gd" id="21_bt5mj"]
+[ext_resource type="Script" uid="uid://djqcpb2drvffi" path="res://scripts/main_menu.gd" id="23_e1j6l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
 size = Vector2(7.5, 576)
@@ -46,21 +38,63 @@ size = Vector2(580.001, 4.99957)
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Gated" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_qnb83")
+volume_db = -80.0
+autoplay = true
+bus = &"Hype"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+starting_db = -70.0
+score_start = 5.0
+score_limit = 25.0
+max_db = -10.0
+always_playing = false
+
+[node name="Fast_Synth" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_sww3w")
+volume_db = -80.0
+autoplay = true
+bus = &"Hype"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+starting_db = -40.0
+score_limit = 20.0
+max_db = -7.0
+always_playing = false
+
+[node name="Heart_Beat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_suyxu")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+
+[node name="Piano_Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_sgl2t")
+volume_db = -65.009
+autoplay = true
+bus = &"Piano"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+
+[node name="Main_Chord" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qouja")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+
 [node name="Game" type="Node2D" parent="."]
 position = Vector2(0, -1)
 script = ExtResource("1_yepdu")
 power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
-projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po")])
+projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po"), ExtResource("14_suyxu")])
+powerup_wait_range = Vector2(7, 18)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game"]
-stream = ExtResource("4_dinhu")
-volume_db = -5.0
-autoplay = true
-parameters/looping = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Game"]
+[node name="Background" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
-material = SubResource("ShaderMaterial_kvuet")
+material = ExtResource("9_bt5mj")
 position = Vector2(360, 360.75)
 scale = Vector2(5.625, 5.6289)
 texture = ExtResource("2_6nrea")
@@ -117,6 +151,9 @@ autostart = true
 wait_time = 2.0
 autostart = true
 
+[node name="Heart_Timer" type="Timer" parent="Game"]
+autostart = true
+
 [node name="Ex" parent="Game" node_paths=PackedStringArray("border") instance=ExtResource("10_dinhu")]
 position = Vector2(241, 213)
 border = NodePath("../Ex_border")
@@ -125,28 +162,76 @@ border = NodePath("../Ex_border")
 position = Vector2(52, 61)
 size = Vector2(620, 620)
 
-[node name="Health_Counter" type="Control" parent="Game"]
+[node name="UI" type="Control" parent="Game"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 260.0
-offset_top = 6.0
-offset_right = 453.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 718.0
 offset_bottom = 46.0
-script = ExtResource("16_264po")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Game/Health_Counter"]
-layout_mode = 0
-offset_left = -210.0
-offset_right = -43.0
+[node name="Heart_Counter" type="HBoxContainer" parent="Game/UI"]
+layout_mode = 1
+offset_left = -1.0
+offset_right = 166.0
 offset_bottom = 40.0
 alignment = 1
+script = ExtResource("16_264po")
 
-[node name="TextureRect" type="TextureRect" parent="Game/Health_Counter/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Game/UI/Heart_Counter"]
 texture_filter = 1
 material = ExtResource("17_1kice")
 layout_mode = 2
 texture = ExtResource("17_264po")
 stretch_mode = 3
+
+[node name="Score" type="RichTextLabel" parent="Game/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.5
+offset_top = -21.5
+offset_right = 59.5
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "0
+"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("19_1kice")
+
+[node name="PowerUp" type="TextureRect" parent="Game/UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -66.0
+offset_top = 3.0
+offset_right = -22.0
+offset_bottom = 47.0
+grow_horizontal = 0
+texture = ExtResource("20_37s47")
+script = ExtResource("21_bt5mj")
+
+[node name="PowerUp_Texture" type="TextureRect" parent="Game/UI/PowerUp"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="GameOver" type="Control" parent="."]
 visible = false
@@ -190,16 +275,62 @@ vertical_alignment = 1
 
 [node name="Stat" type="RichTextLabel" parent="GameOver/TextContainer/StatsContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 24
-text = "0"
+theme_override_font_sizes/normal_font_size = 36
+text = "0 Seconds"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("19_1kice")
+is_gameover = true
 
 [node name="Restart" type="RichTextLabel" parent="GameOver/TextContainer"]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 42
 text = "Press Space To Restart"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 721.0
+offset_bottom = 720.0
+script = ExtResource("23_e1j6l")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu"]
+material = ExtResource("9_bt5mj")
+layout_mode = 0
+offset_right = 722.0
+offset_bottom = 720.0
+texture = ExtResource("2_6nrea")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 396.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 64
+text = "Title"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 0
+offset_top = 399.0
+offset_right = 722.0
+offset_bottom = 719.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Press Space To Start"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
