@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://dw1p3eu1kr11q"]
+
+[ext_resource type="Shader" uid="uid://c12oegfjt1476" path="res://shaders/bg.gdshader" id="1_bhwf3"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dinhu"]
+seamless = true
+noise = SubResource("FastNoiseLite_kvpfn")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvuet"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trtic"]
+seamless = true
+noise = SubResource("FastNoiseLite_kvuet")
+
+[resource]
+shader = ExtResource("1_bhwf3")
+shader_parameter/noise = SubResource("NoiseTexture2D_dinhu")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_trtic")
+shader_parameter/speed = 0.09
+shader_parameter/lightness = 0.115
+shader_parameter/pixelate_amt = 53.16

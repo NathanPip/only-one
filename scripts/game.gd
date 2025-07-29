@@ -19,6 +19,15 @@ var starting_spawn = Vector2(-100, -100)
 @export var proj_wait_range: Vector2 = Vector2(.2, .8)
 @export var powerup_wait_range: Vector2 = Vector2(15, 45)
 
+func on_gamestate_change(state: Globals.GameStateEnum):
+	if state != Globals.GameStateEnum.PLAYING:
+		proj_timer.stop()
+		powerup_timer.stop()
+	else:
+		proj_timer.start()
+		powerup_timer.start()
+	pass
+
 func collision_check(proj: Projectile) -> bool:
 	if proj.position.x-proj.size/2 < player.position.x + 24 && proj.position.x + proj.size/2 > player.position.x - 24 && proj.position.y - proj.size/2 < player.position.y + 24 && proj.position.y + proj.size/2 > player.position.y - 24:
 		return true
@@ -55,9 +64,9 @@ func _on_proj_timeout():
 	var proj_res = projectiles_map[Globals.projectile_type.BASIC_PROJECTILE] 
 	var proj = proj_res.ready_projectiles.pop_front()
 	if proj != null:
-		spawner.prepare_projectile(proj, proj_res.speed_range)
+		spawner.prepare_projectile(proj, proj_res.speed_range*Globals.game_speed)
 		spawn_projectile(proj)
-	var rand = randf_range(proj_wait_range.x, proj_wait_range.y)
+	var rand = randf_range(proj_wait_range.x/Globals.game_speed, proj_wait_range.y/Globals.game_speed)
 	proj_timer.wait_time = rand
 
 func _on_powerup_timeout():
@@ -65,7 +74,7 @@ func _on_powerup_timeout():
 	var keys = powerups_map.keys()
 	var rand_power_up = randi_range(0, keys.size()-1)
 	var power_up = powerups_map[keys[rand_power_up]]
-	var speed_range = projectiles_map[power_up.projectile_type].speed_range
+	var speed_range = projectiles_map[power_up.projectile_type].speed_range*Globals.game_speed
 	var pup = projectiles_map[power_up.projectile_type].ready_projectiles.pop_front()
 	print(pup)
 	if pup != null:
@@ -135,8 +144,10 @@ func _ready() -> void:
 			spawner_groups.append(child)
 
 	Globals.reset_game.connect(reset)
+	Globals.change_gamestate.connect(on_gamestate_change)
 	setup_projectiles(projectile_resources)
 	setup_powerups(power_up_resources)
+	on_gamestate_change(Globals.game_state)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=26 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
@@ -9,10 +9,10 @@
 [ext_resource type="Script" uid="uid://qtewlci5v3kf" path="res://resources/projectile_resource.gd" id="4_ca42v"]
 [ext_resource type="AudioStream" uid="uid://ck2k8mo21n2or" path="res://sounds/sad_one_new_mix.mp3" id="4_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
-[ext_resource type="Shader" uid="uid://c12oegfjt1476" path="res://shaders/bg.gdshader" id="5_kvpfn"]
 [ext_resource type="Resource" uid="uid://bhpqfnimvhmfu" path="res://resources/ex_projectile.tres" id="5_rysoc"]
 [ext_resource type="Resource" uid="uid://l7ywvykiwbfi" path="res://resources/invulnerable_projectile.tres" id="6_ssvqc"]
 [ext_resource type="Resource" uid="uid://4haov2c5asjb" path="res://resources/basic_projectile.tres" id="7_264po"]
+[ext_resource type="Material" uid="uid://dw1p3eu1kr11q" path="res://materials/bg.tres" id="9_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://b3ksaqieodvb4" path="res://scripts/game_over_scene.gd" id="12_dinhu"]
@@ -22,24 +22,7 @@
 [ext_resource type="Script" uid="uid://cs2hitixv5fcw" path="res://scripts/score_counter.gd" id="19_1kice"]
 [ext_resource type="Texture2D" uid="uid://dq3ecrd7qk251" path="res://sprites/powerup_ui_border.png" id="20_37s47"]
 [ext_resource type="Script" uid="uid://bnahmnwkjjrn4" path="res://scripts/power_up_ui.gd" id="21_bt5mj"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvpfn"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dinhu"]
-noise = SubResource("FastNoiseLite_kvpfn")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvuet"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trtic"]
-noise = SubResource("FastNoiseLite_kvuet")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvuet"]
-shader = ExtResource("5_kvpfn")
-shader_parameter/noise = SubResource("NoiseTexture2D_dinhu")
-shader_parameter/noise2 = SubResource("NoiseTexture2D_trtic")
-shader_parameter/speed = 0.09
-shader_parameter/lightness = 0.115
-shader_parameter/pixelate_amt = 53.16
+[ext_resource type="Script" uid="uid://djqcpb2drvffi" path="res://scripts/main_menu.gd" id="23_e1j6l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
 size = Vector2(7.5, 576)
@@ -63,7 +46,7 @@ parameters/looping = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
-material = SubResource("ShaderMaterial_kvuet")
+material = ExtResource("9_bt5mj")
 position = Vector2(360, 360.75)
 scale = Vector2(5.625, 5.6289)
 texture = ExtResource("2_6nrea")
@@ -252,6 +235,49 @@ script = ExtResource("19_1kice")
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 42
 text = "Press Space To Restart"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 721.0
+offset_bottom = 720.0
+script = ExtResource("23_e1j6l")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu"]
+material = ExtResource("9_bt5mj")
+layout_mode = 0
+offset_right = 722.0
+offset_bottom = 720.0
+texture = ExtResource("2_6nrea")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 396.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 64
+text = "Title"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 0
+offset_top = 399.0
+offset_right = 722.0
+offset_bottom = 719.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Press Space To Start"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1

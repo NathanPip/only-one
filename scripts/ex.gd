@@ -47,8 +47,9 @@ func on_timer_end():
 func basic_attack(delta: float):
 	current_attack_time += delta
 	if current_attack_time >= next_attack_time:
-		next_attack_time += 1/basic_attack_fire_rate
+		next_attack_time += 1/(basic_attack_fire_rate*Globals.game_speed)
 		var proj = game_node.projectiles_map[Globals.projectile_type.EX_PROJECTILE].ready_projectiles.pop_front()
+		proj.speed = proj.speed * Globals.game_speed
 		proj.direction = self.position.direction_to(player_node.position)
 		proj.position = self.position
 		game_node.spawn_projectile(proj)
@@ -76,6 +77,12 @@ func reset():
 	current_state = ExState.TRAVELING
 	pass
 
+func gamestate_change(state: Globals.GameStateEnum):
+	if state != Globals.GameStateEnum.PLAYING:
+		timer.stop()
+	else:
+		timer.stop()
+
 func _ready() -> void:
 	if border == null:
 		print("no ex border assigned")
@@ -87,6 +94,8 @@ func _ready() -> void:
 	player_node = game_node.get_node("Player")
 	attack_point = pick_point()
 	Globals.reset_game.connect(reset)
+	Globals.change_gamestate.connect(gamestate_change)
+	gamestate_change(Globals.game_state)
 	pass
 
 func _process(delta: float) -> void:
@@ -94,4 +103,5 @@ func _process(delta: float) -> void:
 		travel(delta)
 	if current_state == ExState.ATTACKING:
 		attack(delta)
+	
 	pass
