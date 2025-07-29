@@ -234,7 +234,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GameOver" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 721.0
@@ -276,7 +275,7 @@ vertical_alignment = 1
 [node name="Stat" type="RichTextLabel" parent="GameOver/TextContainer/StatsContainer"]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 36
-text = "0"
+text = "0 Seconds"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
