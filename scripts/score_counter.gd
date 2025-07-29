@@ -1,6 +1,6 @@
 extends RichTextLabel
 
-var is_gameover: bool = false
+@export var is_gameover: bool = false
 
 func change_text(amt: int):
 	if is_gameover:

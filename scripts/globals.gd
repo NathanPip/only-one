@@ -6,6 +6,7 @@ signal damage_taken
 signal count_up(amt: int)
 signal change_powerup(tex: Texture2D)
 signal change_gamestate(state: GameStateEnum)
+signal damage_anim_playing(amt: float)
 
 
 enum power_up_type {INVULNERABLE}
@@ -74,6 +75,7 @@ func play_damage_anim():
 	var anim_amt = sin(damage_anim_time*PI)
 	print(anim_amt)
 	background.material.set_shader_parameter("damage_amt", anim_amt)
+	damage_anim_playing.emit(anim_amt)
 	pass
 
 func restart():

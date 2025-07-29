@@ -281,6 +281,7 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("19_1kice")
+is_gameover = true
 
 [node name="Restart" type="RichTextLabel" parent="GameOver/TextContainer"]
 layout_mode = 2
