@@ -5,7 +5,7 @@ extends Sprite2D
 @export var size: float = 16
 @export var fired: bool = false
 @export var type: Globals.projectile_type
-@export var debug: bool = true 
+@export var debug: bool = false 
 var direction: Vector2 = Vector2(1, 0)
 
 func _move(delta: float):

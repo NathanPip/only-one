@@ -90,7 +90,8 @@ func _ready() -> void:
 	
 	timer = get_node("Timer")
 	timer.timeout.connect(on_timer_end)
-	game_node = get_tree().get_root().get_node("Node2D").get_node("Game")
+	var main_node = get_tree().get_root().get_node("Node2D")
+	game_node = main_node.get_node("Game")
 	player_node = game_node.get_node("Player")
 	attack_point = pick_point()
 	Globals.reset_game.connect(reset)

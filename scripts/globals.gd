@@ -41,6 +41,20 @@ var next_second: int
 var game_node: Game
 var game_over_node: Control
 var menu_node: Control
+var main_chord: MusicStream
+var piano_loop: MusicStream
+var heart_beat: MusicStream
+var fast_synth: MusicStream
+var gated: MusicStream
+var music_streams: Array[MusicStream]
+
+func update_music(streams: Array[MusicStream]):
+	for s in streams:
+		if score < s.score_start || s.always_playing:
+			continue
+		print(s.volume_db)
+		s.volume_db = s.starting_db + min(sqrt((score-s.score_start)/(s.score_limit-s.score_start)), 1) * (s.max_db-s.starting_db)
+
 
 func set_node_states():
 	game_node.set_process(game_state == GameStateEnum.PLAYING)
@@ -66,6 +80,7 @@ func _process(delta: float) -> void:
 	game_speed += delta/100
 	if game_state != GameStateEnum.PLAYING:
 		return
+	update_music(music_streams)
 	score += delta
 	if score >= next_second:
 		next_second += 1
@@ -74,9 +89,16 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	next_second = score + 1
-	game_node = get_tree().get_root().get_node("Node2D").get_node("Game")
-	game_over_node = get_tree().get_root().get_node("Node2D").get_node("GameOver")
-	menu_node = get_tree().get_root().get_node("Node2D").get_node("MainMenu")
+	var main_node = get_tree().get_root().get_node("Node2D")
+	game_node = main_node.get_node("Game")
+	game_over_node = main_node.get_node("GameOver")
+	menu_node = main_node.get_node("MainMenu")
+	main_chord = main_node.get_node("Main_Chord")
+	fast_synth = main_node.get_node("Fast_Synth")
+	piano_loop = main_node.get_node("Piano_Loop")
+	heart_beat = main_node.get_node("Heart_Beat")
+	gated = main_node.get_node("Gated")
+	music_streams = [main_chord, fast_synth, piano_loop, heart_beat, gated]
 	game_node.on_ready.connect(set_node_states)
 	game_over_node.on_ready.connect(set_node_states)
 	menu_node.on_ready.connect(set_node_states)

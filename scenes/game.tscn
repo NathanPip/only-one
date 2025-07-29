@@ -1,14 +1,19 @@
-[gd_scene load_steps=26 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=31 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
+[ext_resource type="AudioStream" uid="uid://dxa0nmghjkrbl" path="res://sounds/gated_breath.mp3" id="1_qnb83"]
 [ext_resource type="Script" uid="uid://bwfuurc5n2f78" path="res://scripts/game.gd" id="1_yepdu"]
 [ext_resource type="Texture2D" uid="uid://do6therr0ir7b" path="res://sprites/icon.svg" id="2_6nrea"]
 [ext_resource type="Texture2D" uid="uid://cyxrq6elvvesr" path="res://sprites/game_area.png" id="2_iylc6"]
+[ext_resource type="Script" uid="uid://bfaittm8caky5" path="res://scripts/song_controls.gd" id="2_suyxu"]
+[ext_resource type="AudioStream" uid="uid://bg4bad7l2iqvx" path="res://sounds/fast_synth_beat.mp3" id="2_sww3w"]
 [ext_resource type="Script" uid="uid://dqsoql4t4daj8" path="res://resources/power_up_resource.gd" id="2_vtaks"]
 [ext_resource type="Resource" uid="uid://bimi2fbtuicjy" path="res://resources/invulnerable_res.tres" id="3_kvpfn"]
+[ext_resource type="AudioStream" uid="uid://004jeu4youep" path="res://sounds/heart_beat.mp3" id="3_suyxu"]
 [ext_resource type="Script" uid="uid://qtewlci5v3kf" path="res://resources/projectile_resource.gd" id="4_ca42v"]
-[ext_resource type="AudioStream" uid="uid://ck2k8mo21n2or" path="res://sounds/sad_one_new_mix.mp3" id="4_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cyna54vcigls4" path="res://scenes/spawner_group.tscn" id="4_s716r"]
+[ext_resource type="AudioStream" uid="uid://bn0xc28xr4476" path="res://sounds/piano_loop.mp3" id="4_sgl2t"]
+[ext_resource type="AudioStream" uid="uid://bk5ed6o4fs3ed" path="res://sounds/main_chord_progression.mp3" id="5_qouja"]
 [ext_resource type="Resource" uid="uid://bhpqfnimvhmfu" path="res://resources/ex_projectile.tres" id="5_rysoc"]
 [ext_resource type="Resource" uid="uid://l7ywvykiwbfi" path="res://resources/invulnerable_projectile.tres" id="6_ssvqc"]
 [ext_resource type="Resource" uid="uid://4haov2c5asjb" path="res://resources/basic_projectile.tres" id="7_264po"]
@@ -32,17 +37,59 @@ size = Vector2(580.001, 4.99957)
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Gated" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_qnb83")
+volume_db = -80.0
+autoplay = true
+bus = &"Hype"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+starting_db = -70.0
+score_start = 5.0
+score_limit = 25.0
+max_db = -10.0
+always_playing = false
+
+[node name="Fast_Synth" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_sww3w")
+volume_db = -80.0
+autoplay = true
+bus = &"Hype"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+starting_db = -40.0
+score_limit = 20.0
+max_db = -7.0
+always_playing = false
+
+[node name="Heart_Beat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_suyxu")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+
+[node name="Piano_Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_sgl2t")
+volume_db = -65.009
+autoplay = true
+bus = &"Piano"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+
+[node name="Main_Chord" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qouja")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+script = ExtResource("2_suyxu")
+
 [node name="Game" type="Node2D" parent="."]
 position = Vector2(0, -1)
 script = ExtResource("1_yepdu")
 power_up_resources = Array[ExtResource("2_vtaks")]([ExtResource("3_kvpfn")])
 projectile_resources = Array[ExtResource("4_ca42v")]([ExtResource("5_rysoc"), ExtResource("6_ssvqc"), ExtResource("7_264po")])
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game"]
-stream = ExtResource("4_dinhu")
-volume_db = -5.0
-autoplay = true
-parameters/looping = true
+powerup_wait_range = Vector2(10, 20)
 
 [node name="Sprite2D" type="Sprite2D" parent="Game"]
 modulate = Color(0.183242, 0.166597, 0.146242, 1)
@@ -240,6 +287,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MainMenu" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 721.0
