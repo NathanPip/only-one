@@ -7,7 +7,8 @@ signal count_up(amt: int)
 signal change_powerup(tex: Texture2D)
 signal change_gamestate(state: GameStateEnum)
 signal damage_anim_playing(amt: float)
-
+signal heal_anim_playing(amt: float)
+signal healed
 
 enum power_up_type {INVULNERABLE}
 enum projectile_type {BASIC_PROJECTILE, EX_PROJECTILE, INVULNERABLE_PROJECTILE, HEART_UP_PROJECTILE}
@@ -30,6 +31,11 @@ var health: int = 3:
 	get:
 		return health
 
+func heal(amount: int):
+	health += amount
+	healed.emit()
+	heal_anim_time = starting_heal_anim_time
+
 func take_damage(amount: int):
 	health -= amount 
 	damage_taken.emit()
@@ -41,6 +47,8 @@ var game_speed: float = 1
 var score: float = 0
 var starting_damage_anim_time: float = 1
 var damage_anim_time: float = 0
+var starting_heal_anim_time: float = 1
+var heal_anim_time: float = 0
 var next_second: int
 var game_node: Game
 var game_over_node: Control
@@ -73,9 +81,14 @@ func set_node_states():
 
 func play_damage_anim():
 	var anim_amt = sin(damage_anim_time*PI)
-	print(anim_amt)
 	background.material.set_shader_parameter("damage_amt", anim_amt)
 	damage_anim_playing.emit(anim_amt)
+	pass
+
+func play_heal_anim():
+	var anim_amt = sin(heal_anim_time*PI)
+	background.material.set_shader_parameter("heal_amt", anim_amt)
+	heal_anim_playing.emit(anim_amt)
 	pass
 
 func restart():
@@ -98,6 +111,9 @@ func _process(delta: float) -> void:
 	if damage_anim_time >= 0:
 		play_damage_anim()
 		damage_anim_time -= delta
+	if heal_anim_time >= 0:
+		play_heal_anim()
+		heal_anim_time -= delta
 	update_music(music_streams)
 	score += delta
 	if score >= next_second:

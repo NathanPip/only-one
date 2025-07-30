@@ -10,7 +10,8 @@
 [resource]
 script = ExtResource("1_sqv6l")
 type = 0
-speed_range = Vector2(100, 200)
+damage_amt = 0
+speed_range = Vector2(130, 130)
 instantiation_count = 100
 projectile_scene = ExtResource("1_nskmd")
 additional_sprites = Array[Texture2D]([ExtResource("1_7o2m2"), ExtResource("2_vprbf"), ExtResource("3_vq88j"), ExtResource("4_jmu8y")])

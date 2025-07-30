@@ -42,8 +42,8 @@ func on_collision(proj: Projectile):
 			Globals.take_damage(1)
 		elif proj.type == Globals.projectile_type.EX_PROJECTILE:
 			Globals.take_damage(1)
-	elif proj.type == Globals.projectile_type.HEART_UP_PROJECTILE:
-		Globals.health += 1
+	if proj.type == Globals.projectile_type.HEART_UP_PROJECTILE:
+		Globals.heal(1)
 	if powerups_map.has(proj.type):
 		player.set_power_up(powerups_map[proj.type].inst)
 		Globals.change_powerup.emit(proj.texture)
@@ -70,6 +70,7 @@ func _on_proj_timeout():
 	var proj_res = projectiles_map[Globals.projectile_type.BASIC_PROJECTILE] 
 	var proj = proj_res.ready_projectiles.pop_front()
 	if proj != null:
+		print(proj_res.speed_range)
 		spawner.prepare_projectile(proj, proj_res.speed_range*Globals.game_speed)
 		spawn_projectile(proj)
 	var rand = randf_range(proj_wait_range.x/Globals.game_speed, proj_wait_range.y/Globals.game_speed)

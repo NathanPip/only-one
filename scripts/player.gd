@@ -8,6 +8,7 @@ extends CharacterBody2D
 var timer: Timer
 var sprite: Sprite2D
 var blood_particle: CPUParticles2D
+var health_particle: CPUParticles2D
 var current_power_up: PowerUp
 var power_up_timer: float = 0:
 	set(val):
@@ -29,10 +30,17 @@ var power_up_active: bool = false
 func play_damage_anim(amt: float):
 	sprite.material.set_shader_parameter("damage_amt", amt*.4)
 
+func play_heal_anim(amt: float):
+	sprite.material.set_shader_parameter("heal_amt", amt*.4)
+
 func inv_timeout():
 	invulnerable = false
 	blood_particle.emitting = false
 	timer.wait_time = damage_inv_time
+
+func heal():
+	health_particle.restart()
+	health_particle.emitting = true
 
 func take_damage():
 	invulnerable = true
@@ -73,11 +81,13 @@ func _ready() -> void:
 	timer = get_node("Damage_Timer")
 	sprite = get_node("Sprite2D")
 	blood_particle = get_node("Blood_Particle")
+	health_particle = get_node("Health_Particles")
 	timer.wait_time = damage_inv_time
 	timer.timeout.connect(inv_timeout)
 	Globals.reset_game.connect(reset)
 	Globals.damage_taken.connect(take_damage)
 	Globals.damage_anim_playing.connect(play_damage_anim)
+	Globals.healed.connect(heal)
 
 func _process(delta: float) -> void:
 	if power_up_active:
