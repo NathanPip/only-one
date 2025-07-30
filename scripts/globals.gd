@@ -59,6 +59,7 @@ var piano_loop: MusicStream
 var heart_beat: MusicStream
 var fast_synth: MusicStream
 var gated: MusicStream
+var synth_melody: MusicStream
 var music_streams: Array[MusicStream]
 
 func update_music(streams: Array[MusicStream]):
@@ -133,7 +134,8 @@ func _ready() -> void:
 	piano_loop = main_node.get_node("Piano_Loop")
 	heart_beat = main_node.get_node("Heart_Beat")
 	gated = main_node.get_node("Gated")
-	music_streams = [main_chord, fast_synth, piano_loop, heart_beat, gated]
+	synth_melody = main_node.get_node("SynthMelody")
+	music_streams = [main_chord, fast_synth, piano_loop, heart_beat, gated, synth_melody]
 	game_node.on_ready.connect(set_node_states)
 	game_over_node.on_ready.connect(set_node_states)
 	menu_node.on_ready.connect(set_node_states)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=33 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="AudioStream" uid="uid://cqi34fpn1rcpu" path="res://sounds/fast_chords.mp3" id="1_suyxu"]
@@ -17,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://bhpqfnimvhmfu" path="res://resources/ex_projectile.tres" id="5_rysoc"]
 [ext_resource type="Resource" uid="uid://l7ywvykiwbfi" path="res://resources/invulnerable_projectile.tres" id="6_ssvqc"]
 [ext_resource type="Resource" uid="uid://4haov2c5asjb" path="res://resources/basic_projectile.tres" id="7_264po"]
+[ext_resource type="AudioStream" uid="uid://crbrcdwx5uiov" path="res://sounds/synth_melody.mp3" id="7_sgl2t"]
 [ext_resource type="Material" uid="uid://dw1p3eu1kr11q" path="res://materials/bg.tres" id="9_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://c882ticor1lf5" path="res://scenes/ex.tscn" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b6en02fd8qgil" path="res://scenes/ex_border.tscn" id="11_kvuet"]
@@ -83,6 +84,18 @@ autoplay = true
 bus = &"Music"
 parameters/looping = true
 script = ExtResource("2_suyxu")
+
+[node name="SynthMelody" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_sgl2t")
+volume_db = -4.685
+autoplay = true
+parameters/looping = true
+script = ExtResource("2_suyxu")
+starting_db = -70.0
+score_start = 15.0
+score_limit = 35.0
+max_db = -12.0
+always_playing = false
 
 [node name="Game" type="Node2D" parent="."]
 position = Vector2(0, -1)
