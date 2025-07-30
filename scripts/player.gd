@@ -10,6 +10,7 @@ var sprite: Sprite2D
 var blood_particle: CPUParticles2D
 var health_particle: CPUParticles2D
 var current_power_up: PowerUp
+var border: Sprite2D
 var power_up_timer: float = 0:
 	set(val):
 		if val <= 0:
@@ -17,6 +18,7 @@ var power_up_timer: float = 0:
 			if current_power_up == null:
 				return
 			current_power_up._deactivate(self)
+			border.visible = false
 			current_power_up = null
 			Globals.change_powerup.emit(null)
 			return
@@ -72,6 +74,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("action"):
 		if current_power_up != null && !power_up_active:
 			current_power_up._activate(self)
+			border.visible = true
 			power_up_active = true
 
 func _physics_process(_delta: float) -> void:
@@ -84,6 +87,7 @@ func _ready() -> void:
 	sprite = get_node("Sprite2D")
 	blood_particle = get_node("Blood_Particle")
 	health_particle = get_node("Health_Particles")
+	border = get_node("Powerup_Border")
 	timer.wait_time = damage_inv_time
 	timer.timeout.connect(inv_timeout)
 	Globals.reset_game.connect(reset)

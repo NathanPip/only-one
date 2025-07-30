@@ -1,10 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://dywcwocgiu6xa"]
+[gd_scene load_steps=10 format=3 uid="uid://dywcwocgiu6xa"]
 
 [ext_resource type="Script" uid="uid://ddmucc4nmioer" path="res://scripts/player.gd" id="1_8ib4f"]
 [ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="1_phn0w"]
 [ext_resource type="Texture2D" uid="uid://blpqaxq8y00r5" path="res://sprites/blood_particle.png" id="2_qhqgy"]
 [ext_resource type="Shader" uid="uid://cs15daf8gjshf" path="res://shaders/player_shader.gdshader" id="3_dqkch"]
+[ext_resource type="Shader" uid="uid://cq542ejkooxms" path="res://shaders/projectile_border.gdshader" id="3_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://cc6ssowt6d3jq" path="res://sprites/health_particle.png" id="5_qlg0r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("3_tuyoq")
+shader_parameter/border_color = Color(0.605274, 0.605274, 0.605274, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
 shader = ExtResource("3_dqkch")
@@ -31,6 +36,12 @@ gravity = Vector2(0, 300)
 initial_velocity_min = 130.0
 initial_velocity_max = 250.0
 scale_amount_max = 1.5
+
+[node name="Powerup_Border" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_fjrip")
+scale = Vector2(3.3, 3.3)
+texture = ExtResource("1_phn0w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
