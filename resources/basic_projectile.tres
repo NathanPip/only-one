@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ProjectileResource" load_steps=7 format=3 uid="uid://4haov2c5asjb"]
+[gd_resource type="Resource" script_class="ProjectileResource" load_steps=8 format=3 uid="uid://4haov2c5asjb"]
 
 [ext_resource type="Texture2D" uid="uid://uoiuuqeaud4x" path="res://sprites/Obstacle_1.png" id="1_7o2m2"]
 [ext_resource type="PackedScene" uid="uid://cx3r6howwyucd" path="res://scenes/projectile.tscn" id="1_nskmd"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bw1pt6wssya0c" path="res://sprites/Obstacle_2.png" id="2_vprbf"]
 [ext_resource type="Texture2D" uid="uid://ciddb0qeqlc2v" path="res://sprites/Obstacle_3.png" id="3_vq88j"]
 [ext_resource type="Texture2D" uid="uid://bfjbtdxvv2bjj" path="res://sprites/Obstacle_4.png" id="4_jmu8y"]
+[ext_resource type="Material" uid="uid://dxm0w6js6geyt" path="res://materials/dmg_proj_mat.tres" id="5_vprbf"]
 
 [resource]
 script = ExtResource("1_sqv6l")
@@ -15,4 +16,5 @@ speed_range = Vector2(130, 130)
 instantiation_count = 100
 projectile_scene = ExtResource("1_nskmd")
 additional_sprites = Array[Texture2D]([ExtResource("1_7o2m2"), ExtResource("2_vprbf"), ExtResource("3_vq88j"), ExtResource("4_jmu8y")])
+border_mat = ExtResource("5_vprbf")
 metadata/_custom_type_script = "uid://qtewlci5v3kf"

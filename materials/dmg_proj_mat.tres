@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dxm0w6js6geyt"]
+
+[ext_resource type="Shader" uid="uid://cq542ejkooxms" path="res://shaders/projectile_border.gdshader" id="1_wrtby"]
+
+[resource]
+shader = ExtResource("1_wrtby")
+shader_parameter/border_color = Color(0.859331, 0.176031, 0.232754, 1)

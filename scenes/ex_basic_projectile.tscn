@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgnyh41rryk42"]
+[gd_scene load_steps=4 format=3 uid="uid://dgnyh41rryk42"]
 
 [ext_resource type="Texture2D" uid="uid://cwrb7d4i5mynp" path="res://sprites/spike.png" id="1_clitu"]
 [ext_resource type="Script" uid="uid://bmrhs6t42hu6d" path="res://scripts/projectile.gd" id="2_clitu"]
+[ext_resource type="Material" uid="uid://dxm0w6js6geyt" path="res://materials/dmg_proj_mat.tres" id="3_o74i6"]
 
-[node name="Ex_Basic_Projectile" type="Sprite2D"]
-modulate = Color(0, 0, 1, 1)
-texture_filter = 1
-texture = ExtResource("1_clitu")
+[node name="Node2D" type="Node2D"]
 script = ExtResource("2_clitu")
-size = 14.0
-metadata/_custom_type_script = "uid://bmrhs6t42hu6d"
+type = 1
+
+[node name="Border" type="Sprite2D" parent="."]
+material = ExtResource("3_o74i6")
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_clitu")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_clitu")

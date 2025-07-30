@@ -14,7 +14,7 @@ func prepare_projectile(proj: Projectile, speed_range: Vector2):
 	var spawner = ready_spawners[rand]
 	ready_spawners.remove_at(rand)
 	proj.speed = randf_range(speed_range.x, speed_range.y)
-	spawner.wait_time = proj.speed / 100
+	spawner.wait_time = proj.speed / 140
 	if proj == null:
 		print("no projectile")
 		return

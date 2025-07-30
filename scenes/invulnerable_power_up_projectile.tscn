@@ -1,11 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://bh1l66v6lfj5u"]
+[gd_scene load_steps=4 format=3 uid="uid://bh1l66v6lfj5u"]
 
 [ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="1_u7vmt"]
 [ext_resource type="Script" uid="uid://bmrhs6t42hu6d" path="res://scripts/projectile.gd" id="2_u7vmt"]
+[ext_resource type="Material" uid="uid://dxm0w6js6geyt" path="res://materials/dmg_proj_mat.tres" id="3_ktbpe"]
 
-[node name="PowerUpProjectile" type="Sprite2D"]
+[node name="Node2D" type="Node2D"]
+script = ExtResource("2_u7vmt")
+type = 2
+
+[node name="Border" type="Sprite2D" parent="."]
+material = ExtResource("3_ktbpe")
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_u7vmt")
+
+[node name="Sprite" type="Sprite2D" parent="."]
 modulate = Color(1, 0.168627, 1, 1)
 texture_filter = 1
 texture = ExtResource("1_u7vmt")
-script = ExtResource("2_u7vmt")
-metadata/_custom_type_script = "uid://ce83h4mgcvbc3"

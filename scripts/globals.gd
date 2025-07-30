@@ -8,6 +8,7 @@ signal change_powerup(tex: Texture2D)
 signal change_gamestate(state: GameStateEnum)
 signal damage_anim_playing(amt: float)
 signal heal_anim_playing(amt: float)
+signal powerup_anim_playing(amt: float)
 signal healed
 
 enum power_up_type {INVULNERABLE}
@@ -49,6 +50,8 @@ var starting_damage_anim_time: float = 1
 var damage_anim_time: float = 0
 var starting_heal_anim_time: float = 1
 var heal_anim_time: float = 0
+var starting_powerup_anim_time: float = 1
+var powerup_anim_time: float = 0
 var next_second: int
 var game_node: Game
 var game_over_node: Control
@@ -80,17 +83,10 @@ func set_node_states():
 	menu_node.set_process_input(game_state == GameStateEnum.MENU)
 	menu_node.visible = game_state == GameStateEnum.MENU
 
-func play_damage_anim():
-	var anim_amt = sin(damage_anim_time*PI)
-	background.material.set_shader_parameter("damage_amt", anim_amt)
-	damage_anim_playing.emit(anim_amt)
-	pass
-
-func play_heal_anim():
-	var anim_amt = sin(heal_anim_time*PI)
-	background.material.set_shader_parameter("heal_amt", anim_amt)
-	heal_anim_playing.emit(anim_amt)
-	pass
+func play_anim(time: float, param: String, sig: Signal):
+	var anim_amt = sin(time*PI)
+	background.material.set_shader_parameter(param, anim_amt)
+	sig.emit(anim_amt)
 
 func restart():
 	game_state = GameStateEnum.PLAYING
@@ -110,11 +106,14 @@ func _process(delta: float) -> void:
 	if game_state != GameStateEnum.PLAYING:
 		return
 	if damage_anim_time >= 0:
-		play_damage_anim()
+		play_anim(damage_anim_time, "damage_amt", damage_anim_playing)
 		damage_anim_time -= delta
 	if heal_anim_time >= 0:
-		play_heal_anim()
+		play_anim(heal_anim_time, "heal_amt", heal_anim_playing)
 		heal_anim_time -= delta
+	if powerup_anim_time >= 0:
+		play_anim(powerup_anim_time, "powerup_amt", powerup_anim_playing)
+		powerup_anim_time -= delta
 	update_music(music_streams)
 	score += delta
 	if score >= next_second:

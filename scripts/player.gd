@@ -50,6 +50,8 @@ func take_damage():
 	pass
 
 func set_power_up(power_up: PowerUp):
+	if power_up != null:
+		Globals.powerup_anim_time = Globals.starting_powerup_anim_time
 	current_power_up = power_up
 	power_up_timer = power_up.duration
 

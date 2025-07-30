@@ -46,7 +46,7 @@ func on_collision(proj: Projectile):
 		Globals.heal(1)
 	if powerups_map.has(proj.type):
 		player.set_power_up(powerups_map[proj.type].inst)
-		Globals.change_powerup.emit(proj.texture)
+		Globals.change_powerup.emit(proj.get_tex())
 
 func kill_projectile(proj: Projectile, index: int):
 	projectiles_map[proj.type].ready_projectiles.append(proj)
@@ -113,9 +113,11 @@ func setup_projectiles(projectiles: Array[ProjectileResource]):
 			return
 		for i in range(proj.instantiation_count):
 			var inst = proj.projectile_scene.instantiate() as Projectile
+			inst.set_border_material(proj.border_mat)
 			if proj.additional_sprites.size() > 0:
 				var tex = proj.additional_sprites[i % proj.additional_sprites.size()]
-				inst.texture = tex
+				inst.set_tex(tex)
+				inst.set_border_tex(tex)
 			inst.type = proj.type
 			self.add_child(inst)
 			inst.global_position = starting_spawn 

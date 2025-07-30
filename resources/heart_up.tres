@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ProjectileResource" load_steps=3 format=3 uid="uid://dwsmhu44v50i"]
+[gd_resource type="Resource" script_class="ProjectileResource" load_steps=4 format=3 uid="uid://dwsmhu44v50i"]
 
 [ext_resource type="Script" uid="uid://qtewlci5v3kf" path="res://resources/projectile_resource.gd" id="1_83ypb"]
+[ext_resource type="Material" uid="uid://syo5bxk3byjv" path="res://materials/heal_proj_mat.tres" id="1_cpd3j"]
 [ext_resource type="PackedScene" uid="uid://ctgwf3a7vlnmp" path="res://scenes/heart_projectile.tscn" id="1_pogxm"]
 
 [resource]
@@ -11,4 +12,5 @@ speed_range = Vector2(130, 130)
 instantiation_count = 10
 projectile_scene = ExtResource("1_pogxm")
 additional_sprites = Array[Texture2D]([])
+border_mat = ExtResource("1_cpd3j")
 metadata/_custom_type_script = "uid://qtewlci5v3kf"
