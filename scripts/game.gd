@@ -46,6 +46,7 @@ func on_collision(proj: Projectile):
 		Globals.heal(1)
 	if powerups_map.has(proj.type):
 		player.set_power_up(powerups_map[proj.type].inst)
+		Globals.play_sound(Globals.powerup_pickup_sound)
 		Globals.change_powerup.emit(proj.get_tex())
 
 func kill_projectile(proj: Projectile, index: int):
@@ -183,6 +184,7 @@ func _process(delta: float) -> void:
 		if collision_check(proj):
 			on_collision(proj)	
 			kill_projectile(proj, i)
+			Globals.play_sound(Globals.pop_sound)
 			continue
 		if proj.position.x > 2000 || proj.position.x < -300 || proj.position.y > 2000 || proj.position.y < -300:
 			kill_projectile(proj, i)

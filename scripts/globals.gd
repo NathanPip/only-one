@@ -34,11 +34,13 @@ var health: int = 3:
 
 func heal(amount: int):
 	health += amount
+	play_sound(health_sound)
 	healed.emit()
 	heal_anim_time = starting_heal_anim_time
 
 func take_damage(amount: int):
 	health -= amount 
+	play_sound(hit_sound)
 	damage_taken.emit()
 	damage_anim_time = starting_damage_anim_time
 	if health <= 0:
@@ -53,10 +55,19 @@ var heal_anim_time: float = 0
 var starting_powerup_anim_time: float = 1
 var powerup_anim_time: float = 0
 var next_second: int
+
 var game_node: Game
+
 var game_over_node: Control
 var menu_node: Control
+
 var background: Sprite2D
+
+var health_sound: AudioStreamPlayer
+var powerup_pickup_sound: AudioStreamPlayer
+var hit_sound: AudioStreamPlayer
+var pop_sound: AudioStreamPlayer
+
 var main_chord: MusicStream
 var piano_loop: MusicStream
 var heart_beat: MusicStream
@@ -71,6 +82,8 @@ func update_music(streams: Array[MusicStream]):
 			continue
 		s.volume_db = s.starting_db + min(sqrt((score-s.score_start)/(s.score_limit-s.score_start)), 1) * (s.max_db-s.starting_db)
 
+func play_sound(sound: AudioStreamPlayer):
+	sound.play()
 
 func set_node_states():
 	game_node.set_process(game_state == GameStateEnum.PLAYING)
@@ -134,6 +147,10 @@ func _ready() -> void:
 	heart_beat = main_node.get_node("Heart_Beat")
 	gated = main_node.get_node("Gated")
 	synth_melody = main_node.get_node("SynthMelody")
+	health_sound = main_node.get_node("HealthSound")
+	hit_sound = main_node.get_node("HitSound")
+	pop_sound = main_node.get_node("PopSound")
+	powerup_pickup_sound = main_node.get_node("PowerUpPickupSound")
 	music_streams = [main_chord, fast_synth, piano_loop, heart_beat, gated, synth_melody]
 	game_node.on_ready.connect(set_node_states)
 	game_over_node.on_ready.connect(set_node_states)

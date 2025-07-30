@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=45 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="AudioStream" uid="uid://cqi34fpn1rcpu" path="res://sounds/fast_chords.mp3" id="1_suyxu"]
@@ -38,6 +38,10 @@
 [ext_resource type="Material" uid="uid://syo5bxk3byjv" path="res://materials/heal_proj_mat.tres" id="36_05nbr"]
 [ext_resource type="Material" uid="uid://cxqpc08kv0cu3" path="res://materials/powerup_proj_mat.tres" id="37_0sl42"]
 [ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="38_oaba0"]
+[ext_resource type="AudioStream" uid="uid://b1si5m26b3wwj" path="res://sounds/hit_sound.mp3" id="39_8ool0"]
+[ext_resource type="AudioStream" uid="uid://c8gt2p1jo6372" path="res://sounds/power_up_pickup.mp3" id="40_pr1ej"]
+[ext_resource type="AudioStream" uid="uid://cyjdclk41e5b0" path="res://sounds/health_pickup.mp3" id="41_05nbr"]
+[ext_resource type="AudioStream" uid="uid://b0dxpd6op3co6" path="res://sounds/pop_sound.mp3" id="42_pr1ej"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
 size = Vector2(7.5, 576)
@@ -576,3 +580,18 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Press Space or E to activate Memory Blocker"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("39_8ool0")
+max_polyphony = 5
+
+[node name="PowerUpPickupSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("40_pr1ej")
+
+[node name="HealthSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("41_05nbr")
+
+[node name="PopSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("42_pr1ej")
+volume_db = 4.0
+max_polyphony = 10
