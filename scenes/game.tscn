@@ -48,7 +48,7 @@ parameters/looping = true
 script = ExtResource("2_suyxu")
 starting_db = -70.0
 score_limit = 15.0
-max_db = -5.0
+max_db = -3.0
 always_playing = false
 
 [node name="Fast_Synth" type="AudioStreamPlayer" parent="."]
@@ -61,6 +61,7 @@ script = ExtResource("2_suyxu")
 starting_db = -70.0
 score_start = 5.0
 score_limit = 30.0
+max_db = -6.0
 always_playing = false
 
 [node name="Heart_Beat" type="AudioStreamPlayer" parent="."]
@@ -93,8 +94,8 @@ parameters/looping = true
 script = ExtResource("2_suyxu")
 starting_db = -70.0
 score_start = 15.0
-score_limit = 35.0
-max_db = -12.0
+score_limit = 40.0
+max_db = -10.0
 always_playing = false
 
 [node name="Game" type="Node2D" parent="."]

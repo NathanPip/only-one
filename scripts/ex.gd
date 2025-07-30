@@ -56,7 +56,6 @@ func basic_attack(delta: float):
 	pass
 
 func attack(delta: float):
-	print("attacking")
 	if current_attack == Attacks.BASIC:
 		basic_attack(delta)
 	pass
