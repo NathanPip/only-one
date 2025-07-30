@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("1_lf855")
 type = 1
-speed_range = Vector2(100, 200)
+damage_amt = 0
+speed_range = Vector2(130, 130)
 instantiation_count = 60
 projectile_scene = ExtResource("1_cxfso")
 additional_sprites = Array[Texture2D]([])
