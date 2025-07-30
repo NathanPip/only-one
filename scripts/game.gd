@@ -86,7 +86,7 @@ func _on_powerup_timeout():
 	var pup = projectiles_map[power_up.projectile_type].ready_projectiles.pop_front()
 	print(pup)
 	if pup != null:
-		spawner.prepare_projectile(pup, speed_range)
+		spawner.prepare_projectile(pup, speed_range * Globals.game_speed)
 		spawn_projectile(pup)
 	var rand = randf_range(powerup_wait_range.x, powerup_wait_range.y)
 	powerup_timer.wait_time = rand
