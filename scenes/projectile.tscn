@@ -5,6 +5,7 @@
 
 [node name="Projectile" type="Sprite2D"]
 texture_filter = 1
+scale = Vector2(2, 2)
 texture = ExtResource("1_3ijri")
 script = ExtResource("2_q3m7n")
-size = 32.0
+size = 30.0

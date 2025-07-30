@@ -13,7 +13,6 @@ func _move(delta: float):
 	pass
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	self.scale *= size/16
 	pass # Replace with function body.
 
 func _process(delta: float) -> void:

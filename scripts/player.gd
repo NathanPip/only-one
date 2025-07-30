@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var speed = 300.0
 @export var starting_position: Vector2 = Vector2(601, 351)
 @export var damage_inv_time: float = 1
+@export var size = 48
 var timer: Timer
 var sprite: Sprite2D
 var blood_particle: CPUParticles2D

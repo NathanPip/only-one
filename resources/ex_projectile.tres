@@ -9,4 +9,5 @@ type = 1
 speed_range = Vector2(100, 200)
 instantiation_count = 60
 projectile_scene = ExtResource("1_cxfso")
+additional_sprites = Array[Texture2D]([])
 metadata/_custom_type_script = "uid://qtewlci5v3kf"

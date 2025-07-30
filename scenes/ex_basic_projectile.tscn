@@ -8,4 +8,5 @@ modulate = Color(0, 0, 1, 1)
 texture_filter = 1
 texture = ExtResource("1_clitu")
 script = ExtResource("2_clitu")
+size = 14.0
 metadata/_custom_type_script = "uid://bmrhs6t42hu6d"

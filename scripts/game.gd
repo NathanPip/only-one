@@ -20,6 +20,7 @@ var starting_spawn = Vector2(-100, -100)
 @export var proj_wait_range: Vector2 = Vector2(.2, .8)
 @export var powerup_wait_range: Vector2 = Vector2(15, 45)
 @export var heart_wait_range: Vector2 = Vector2(10, 15)
+@export var collision_pixel_adj = 2;
 
 func on_gamestate_change(state: Globals.GameStateEnum):
 	if state != Globals.GameStateEnum.PLAYING:
@@ -31,15 +32,16 @@ func on_gamestate_change(state: Globals.GameStateEnum):
 	pass
 
 func collision_check(proj: Projectile) -> bool:
-	if proj.position.x-proj.size/2 < player.position.x + 24 && proj.position.x + proj.size/2 > player.position.x - 24 && proj.position.y - proj.size/2 < player.position.y + 24 && proj.position.y + proj.size/2 > player.position.y - 24:
+	if proj.position.x-proj.size/2 < player.position.x + player.size/2 && proj.position.x + proj.size/2 > player.position.x - player.size/2 && proj.position.y - proj.size/2 < player.position.y + player.size/2 && proj.position.y + proj.size/2 > player.position.y - player.size/2:
 		return true
 	return false
 
 func on_collision(proj: Projectile):
-	if proj.type == Globals.projectile_type.BASIC_PROJECTILE:
-		Globals.take_damage(1)
-	elif proj.type == Globals.projectile_type.EX_PROJECTILE:
-		Globals.take_damage(1)
+	if !player.invulnerable:
+		if proj.type == Globals.projectile_type.BASIC_PROJECTILE:
+			Globals.take_damage(1)
+		elif proj.type == Globals.projectile_type.EX_PROJECTILE:
+			Globals.take_damage(1)
 	elif proj.type == Globals.projectile_type.HEART_UP_PROJECTILE:
 		Globals.health += 1
 	if powerups_map.has(proj.type):
@@ -175,7 +177,7 @@ func _process(delta: float) -> void:
 			fired_projectiles.remove_at(i)
 			continue
 		proj._move(delta)
-		if collision_check(proj) && !player.invulnerable:
+		if collision_check(proj):
 			on_collision(proj)	
 			kill_projectile(proj, i)
 			continue

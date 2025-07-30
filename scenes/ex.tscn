@@ -5,6 +5,7 @@
 
 [node name="Ex" type="Node2D"]
 script = ExtResource("2_ro54v")
+attack_range = Vector2(2, 3.5)
 basic_attack_fire_rate = 4.0
 
 [node name="Ex_sprite" type="Sprite2D" parent="."]

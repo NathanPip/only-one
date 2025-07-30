@@ -84,11 +84,15 @@ func restart():
 	game_speed = 1
 	score = 0
 	next_second = score + 1
+	damage_anim_time = 0
 	count_up.emit(0)
+	for s in music_streams:
+		if !s.always_playing:
+			s.volume_db = s.starting_db
 	pass
 
 func _process(delta: float) -> void:
-	game_speed += delta/100
+	game_speed += delta/200
 	if game_state != GameStateEnum.PLAYING:
 		return
 	if damage_anim_time >= 0:
