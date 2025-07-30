@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dbv0sfajek4yy"]
+[gd_scene load_steps=41 format=3 uid="uid://dbv0sfajek4yy"]
 
 [ext_resource type="PackedScene" uid="uid://dywcwocgiu6xa" path="res://scenes/player.tscn" id="1_4jkwy"]
 [ext_resource type="AudioStream" uid="uid://cqi34fpn1rcpu" path="res://sounds/fast_chords.mp3" id="1_suyxu"]
@@ -30,6 +30,14 @@
 [ext_resource type="Texture2D" uid="uid://dq3ecrd7qk251" path="res://sprites/powerup_ui_border.png" id="20_37s47"]
 [ext_resource type="Script" uid="uid://bnahmnwkjjrn4" path="res://scripts/power_up_ui.gd" id="21_bt5mj"]
 [ext_resource type="Script" uid="uid://djqcpb2drvffi" path="res://scripts/main_menu.gd" id="23_e1j6l"]
+[ext_resource type="Material" uid="uid://dxm0w6js6geyt" path="res://materials/dmg_proj_mat.tres" id="31_nepv3"]
+[ext_resource type="Texture2D" uid="uid://bw1pt6wssya0c" path="res://sprites/Obstacle_2.png" id="32_7025r"]
+[ext_resource type="Texture2D" uid="uid://uoiuuqeaud4x" path="res://sprites/Obstacle_1.png" id="33_m4url"]
+[ext_resource type="Texture2D" uid="uid://ciddb0qeqlc2v" path="res://sprites/Obstacle_3.png" id="34_8ool0"]
+[ext_resource type="Texture2D" uid="uid://bfjbtdxvv2bjj" path="res://sprites/Obstacle_4.png" id="35_pr1ej"]
+[ext_resource type="Material" uid="uid://syo5bxk3byjv" path="res://materials/heal_proj_mat.tres" id="36_05nbr"]
+[ext_resource type="Material" uid="uid://cxqpc08kv0cu3" path="res://materials/powerup_proj_mat.tres" id="37_0sl42"]
+[ext_resource type="Texture2D" uid="uid://dujl40unr4emm" path="res://sprites/blue_square.png" id="38_oaba0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v5xx"]
 size = Vector2(7.5, 576)
@@ -311,7 +319,7 @@ anchors_preset = 0
 offset_right = 721.0
 offset_bottom = 720.0
 script = ExtResource("23_e1j6l")
-screens = [NodePath("Title_Screen")]
+screens = [NodePath("Title_Screen"), NodePath("Tutorial_1"), NodePath("Tutorial_2")]
 
 [node name="TextureRect" type="TextureRect" parent="MainMenu"]
 material = ExtResource("9_bt5mj")
@@ -355,16 +363,193 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Tutorial_1" type="Control" parent="MainMenu"]
+visible = false
 anchors_preset = 0
 offset_right = 721.0
 offset_bottom = 720.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/Tutorial_1"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 256.0
+offset_right = 721.0
+offset_bottom = 501.0
+theme_override_font_sizes/normal_font_size = 36
+text = "Dodge the memories to keep yourself from breaking"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_1"]
+material = ExtResource("31_nepv3")
+layout_mode = 0
+offset_left = 336.0
+offset_top = 206.0
+offset_right = 380.0
+offset_bottom = 249.0
+texture = ExtResource("32_7025r")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_1/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("32_7025r")
+
+[node name="TextureRect2" type="TextureRect" parent="MainMenu/Tutorial_1"]
+material = ExtResource("31_nepv3")
+layout_mode = 0
+offset_left = 390.0
+offset_top = 209.0
+offset_right = 434.0
+offset_bottom = 252.0
+texture = ExtResource("33_m4url")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_1/TextureRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("33_m4url")
+
+[node name="TextureRect3" type="TextureRect" parent="MainMenu/Tutorial_1"]
+material = ExtResource("31_nepv3")
+layout_mode = 0
+offset_left = 222.0
+offset_top = 206.0
+offset_right = 266.0
+offset_bottom = 249.0
+texture = ExtResource("34_8ool0")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_1/TextureRect3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("34_8ool0")
+
+[node name="TextureRect4" type="TextureRect" parent="MainMenu/Tutorial_1"]
+material = ExtResource("31_nepv3")
+layout_mode = 0
+offset_left = 278.0
+offset_top = 206.0
+offset_right = 322.0
+offset_bottom = 249.0
+texture = ExtResource("35_pr1ej")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_1/TextureRect4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("35_pr1ej")
 
 [node name="Tutorial_2" type="Control" parent="MainMenu"]
+visible = false
 anchors_preset = 0
 offset_right = 721.0
 offset_bottom = 720.0
 
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/Tutorial_2"]
+offset_left = -1.0
+offset_top = 299.0
+offset_right = 719.0
+offset_bottom = 435.0
+theme_override_font_sizes/normal_font_size = 36
+text = "Collect Powerups and Healing Items "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MainMenu/Tutorial_2"]
+offset_left = -2.0
+offset_top = 418.0
+offset_right = 718.0
+offset_bottom = 554.0
+theme_override_font_sizes/normal_font_size = 36
+text = "Only One Powerup Can Be Held At a Time"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_2"]
+material = ExtResource("36_05nbr")
+offset_left = 352.0
+offset_top = 243.0
+offset_right = 396.0
+offset_bottom = 286.0
+texture = ExtResource("17_264po")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_2/TextureRect"]
+material = ExtResource("17_1kice")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_264po")
+
+[node name="TextureRect2" type="TextureRect" parent="MainMenu/Tutorial_2"]
+material = ExtResource("37_0sl42")
+offset_left = 286.0
+offset_top = 244.0
+offset_right = 330.0
+offset_bottom = 287.0
+texture = ExtResource("38_oaba0")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu/Tutorial_2/TextureRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("38_oaba0")
+
 [node name="Tutorial_3" type="Control" parent="MainMenu"]
+visible = false
 anchors_preset = 0
 offset_right = 721.0
 offset_bottom = 720.0
