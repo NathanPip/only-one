@@ -26,8 +26,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if wait_time > 0:
 		wait_time -= delta
-	queue_redraw()
+	if Engine.is_editor_hint():
+		queue_redraw()
 
 func _draw() -> void:
+	if !Engine.is_editor_hint():
+		return
 	draw_line(Vector2.ZERO, draw_dir, Color.RED)
 	draw_circle(Vector2.ZERO, 10.0, Color.GREEN, false)

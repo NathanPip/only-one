@@ -49,7 +49,7 @@ func basic_attack(delta: float):
 	if current_attack_time >= next_attack_time:
 		next_attack_time += 1/(basic_attack_fire_rate*Globals.game_speed)
 		var proj = game_node.projectiles_map[Globals.projectile_type.EX_PROJECTILE].ready_projectiles.pop_front()
-		proj.speed = proj.speed * Globals.game_speed
+		proj.speed = game_node.projectiles_map[Globals.projectile_type.EX_PROJECTILE].speed_range.x * Globals.game_speed
 		proj.direction = self.position.direction_to(player_node.position)
 		proj.position = self.position
 		game_node.spawn_projectile(proj)
